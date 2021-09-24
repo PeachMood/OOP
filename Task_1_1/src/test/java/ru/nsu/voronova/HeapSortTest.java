@@ -2,6 +2,7 @@ package ru.nsu.voronova;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+
 import java.util.*;
 
 class HeapSortTest {
@@ -19,120 +20,140 @@ class HeapSortTest {
     return temp;
   }
 
-  private void emptyArrayTest() {
-    int[] actual = new int[] { };
+  @Test
+  public void testSort_emptyArray() {
+    int[] actual = new int[]{};
     HeapSort.sort(actual);
-    int[] expected = new int[] { };
-    Assertions.assertArrayEquals(expected, actual);
-  }
-
-  private void unorderedArrayTest(int arraySize, int minimum, int maximum) {
-    if (arraySize < 0 ) {
-      System.out.println("Invalid array size " + arraySize);
-      return;
-    }
-
-    int[] array;
-    int[] expected;
-    int[] actual;
-
-    array = generateArray(arraySize, minimum, maximum);
-    expected = Arrays.copyOf(array, array.length);
-    actual = HeapSort.sort(array);
-    Arrays.sort(expected);
-    HeapSort.sort(actual);
-    Assertions.assertArrayEquals(expected, actual);
-  }
-
-  private void orderedArrayTest(int arraySize, int minimum, int maximum) {
-    if (arraySize < 0 ) {
-      System.out.println("Invalid array size " + arraySize);
-      return;
-    }
-
-    int[] array;
-    int[] expected;
-    int[] actual;
-
-    array = new int[arraySize];
-    Arrays.fill(array, randomInt(minimum, maximum));
-    expected = Arrays.copyOf(array, array.length);
-    actual = HeapSort.sort(array);
-    HeapSort.sort(actual);
-    Assertions.assertArrayEquals(expected, actual);
-  }
-
-  private void oneValueArrayTest(int arraySize, int minimum, int maximum) {
-    if (arraySize < 0 ) {
-      System.out.println("Invalid array size " + arraySize);
-      return;
-    }
-
-    int[] array;
-    int[] expected;
-    int[] actual;
-
-    array = generateArray(arraySize, minimum, maximum);
-    Arrays.sort(array);
-    expected = Arrays.copyOf(array, array.length);
-    actual = HeapSort.sort(array);
+    int[] expected = new int[]{};
     Assertions.assertArrayEquals(expected, actual);
   }
 
   @Test
-  public void testSort() {
+  public void testSort_unorderedArray() {
+    int[] array;
+    int[] expected;
+    int[] actual;
 
-    int minimum;
-    int maximum;
+    array = generateArray(1, -100, 100);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Arrays.sort(expected);
+    Assertions.assertArrayEquals(expected, actual);
 
-    // sorting an empty array
-    emptyArrayTest();
+    array = generateArray(2, -100, 100);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Arrays.sort(expected);
+    Assertions.assertArrayEquals(expected, actual);
 
-    // sorting an array of size 2
-    minimum = -100;
-    maximum = 100;
-    unorderedArrayTest(2, minimum, maximum);
-    orderedArrayTest(2, minimum, maximum);
-    oneValueArrayTest(2, minimum, maximum);
+    array = generateArray(3, -1000, 1000);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Arrays.sort(expected);
+    Assertions.assertArrayEquals(expected, actual);
 
-    minimum = -1000;
-    maximum = 1000;
-    unorderedArrayTest(2, minimum, maximum);
-    orderedArrayTest(2, minimum, maximum);
-    oneValueArrayTest(2, minimum, maximum);
+    array = generateArray(3, -10000, 10000);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Arrays.sort(expected);
+    Assertions.assertArrayEquals(expected, actual);
 
+    array = generateArray(randomInt(4, 10000), -10000, 10000);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Arrays.sort(expected);
+    Assertions.assertArrayEquals(expected, actual);
 
-    // sorting an array of size 3
-    unorderedArrayTest(3, minimum, maximum);
-    orderedArrayTest(3, minimum, maximum);
-    oneValueArrayTest(3, minimum, maximum);
+    array = generateArray(randomInt(4, 100000), -1000000, 1000000);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Arrays.sort(expected);
+    Assertions.assertArrayEquals(expected, actual);
+  }
 
-    minimum = -10000;
-    maximum = 10000;
-    unorderedArrayTest(3, minimum, maximum);
-    orderedArrayTest(3, minimum, maximum);
-    oneValueArrayTest(3, minimum, maximum);
+  @Test
+  public void testSort_orderedArray() {
+    int[] array;
+    int[] expected;
+    int[] actual;
 
+    array = generateArray(2, -100, 100);
+    Arrays.sort(array);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
 
-    // sorting array of a random size
-    unorderedArrayTest(randomInt(4, 10000), minimum, maximum);
-    orderedArrayTest(randomInt(4, 10000), minimum, maximum);
-    oneValueArrayTest(randomInt(4, 10000), minimum, maximum);
+    array = generateArray(3, -1000, 1000);
+    Arrays.sort(array);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
 
-    minimum = -100000;
-    maximum = 100000;
-    unorderedArrayTest(randomInt(4, 100000), minimum, maximum);
-    orderedArrayTest(randomInt(4, 100000), minimum, maximum);
-    oneValueArrayTest(randomInt(4, 100000), minimum, maximum);
+    array = generateArray(3, -10000, 10000);
+    Arrays.sort(array);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
 
-    minimum = -1000000;
-    maximum = 1000000;
-    unorderedArrayTest(randomInt(4, 100000), minimum, maximum);
-    orderedArrayTest(randomInt(4, 100000), minimum, maximum);
-    oneValueArrayTest(randomInt(4, 100000), minimum, maximum);
+    array = generateArray(randomInt(4, 10000), -10000, 10000);
+    Arrays.sort(array);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
 
-    unorderedArrayTest(randomInt(4, 100000), minimum, maximum);
-    orderedArrayTest(randomInt(4, 100000), minimum, maximum);
-    oneValueArrayTest(randomInt(4, 100000), minimum, maximum);
+    array = generateArray(randomInt(4, 100000), -1000000, 1000000);
+    Arrays.sort(array);
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
+  }
+
+  @Test
+  public void testSort_oneValueArray() {
+    int[] array;
+    int[] expected;
+    int[] actual;
+    int size;
+
+    array = new int[1];
+    Arrays.fill(array, randomInt(-100, 100));
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
+
+    array = new int[2];
+    Arrays.fill(array, randomInt(-100, 100));
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
+
+    size = randomInt(4, 10000);
+    array = new int[size];
+    Arrays.fill(array, randomInt(-100000, 100000));
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
+
+    size = randomInt(4, 10000);
+    array = new int[size];
+    Arrays.fill(array, randomInt(-1000000, 1000000));
+    expected = array.clone();
+    actual = array.clone();
+    HeapSort.sort(actual);
+    Assertions.assertArrayEquals(expected, actual);
   }
 }

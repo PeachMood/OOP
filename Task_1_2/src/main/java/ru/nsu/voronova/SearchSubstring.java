@@ -14,6 +14,7 @@ public class SearchSubstring {
       reader.reset();
       return true;
     }
+    reader.reset();
     return false;
   }
 
@@ -103,6 +104,10 @@ public class SearchSubstring {
     pattern.close();
     text.close();
     return result;
+  }
+
+  public static void main(String[] args) throws IOException {
+    SearchSubstring.search(new FileReader("pattern1.txt"), new FileReader("text1.txt"));
   }
 }
 

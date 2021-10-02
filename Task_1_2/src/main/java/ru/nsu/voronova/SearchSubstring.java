@@ -1,113 +1,83 @@
 package ru.nsu.voronova;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SearchSubstring {
-  public static boolean isEmptyString(BufferedReader reader) throws IOException {
-    if (reader.markSupported()) {
-      reader.mark(1);
-    }
+  private static int[] zFunction(String pattern, String text) {
+    int patternLength = pattern.length();
+    int textLength = text.length();
 
-    if (reader.read() == -1) {
-      reader.reset();
-      return true;
-    }
-    reader.reset();
-    return false;
-  }
+    int stringLength = patternLength + textLength;
+    String string = pattern + text;
 
-  public static int getStringLength(BufferedReader reader, int maxStringLength) throws IOException {
-    if (reader.markSupported()) {
-      reader.mark(maxStringLength);
-    }
-    int length = 0;
-    while (reader.read() != -1) length++;
-    reader.reset();
-    return length;
-  }
-
-  private static ArrayList<Integer> zFunction(BufferedReader pattern, BufferedReader text) throws IOException {
-    if (isEmptyString(pattern)) return null;
-
-    if (isEmptyString(text)) return null;
-
-    final int maxStringLength = 2048;
-    final int patternLength = getStringLength(pattern, maxStringLength);
-    char[] patternBuffer = new char[patternLength];
-
-    int readCount = pattern.read(patternBuffer, 0, patternLength);
-
-    int bufferSize = 6 * patternLength;
-    char[] buffer = Arrays.copyOf(patternBuffer, bufferSize);
-
-    int shift = 0;
     int left = 0;
     int right = 0;
-    int[] z = new int[patternLength];
-    ArrayList<Integer> result = new ArrayList<>();
-    for (int i = 1; readCount != -1; ++i) {
-      int currentZ = (right > i) ? Math.min(z[i - left], right - i) : 0;
+    int[] z = new int[stringLength];
+    for (int i = 1; i < stringLength; ++i) {
+      z[i] = (right > i) ? Math.min(z[i - left], right - i) : 0;
 
-      int index = i - shift;
-      if (index == bufferSize || i == patternLength) {
-        shift += readCount;
-        index -= readCount;
-        readCount = text.read(buffer, 0, bufferSize);
-        bufferSize = readCount;
-        if (readCount != -1) {
-          buffer = Arrays.copyOfRange(buffer, 0, readCount);
-        }
+      while (z[i] < patternLength && i + z[i] < stringLength && string.charAt(z[i]) == string.charAt(i + z[i])) {
+        z[i]++;
       }
 
-      while (currentZ < patternLength && index + currentZ < bufferSize && patternBuffer[currentZ] == buffer[index + currentZ]) {
-        currentZ++;
-        if (i >= patternLength && index + currentZ == bufferSize) {
-          int afterIndex = bufferSize - index;
-          buffer = Arrays.copyOfRange(buffer, index, bufferSize + index);
-          shift += readCount;
-          readCount = text.read(buffer, afterIndex, index);
-          bufferSize = afterIndex;
-
-          if (readCount != -1) {
-            bufferSize += readCount;
-          }
-
-          shift -= afterIndex;
-          index = i - shift;
-        }
-      }
-
-      if (i < patternLength) {
-        z[index] = currentZ;
-      }
-
-      if (i + currentZ > right) {
+      if (i + z[i] > right) {
         left = i;
-        right = i + currentZ;
-      }
-
-      if (i >= patternLength && currentZ == patternLength) {
-        result.add(i - patternLength);
+        right = i + z[i];
       }
     }
-    return result;
+
+    return z;
   }
 
-  public static ArrayList<Integer> search(Reader patternReader, Reader textReader) throws IOException {
-    BufferedReader pattern = new BufferedReader(patternReader);
+  public static ArrayList<Integer> search(String pattern, Reader textReader) throws IOException {
+    int patternLength = pattern.length();
+    if (patternLength == 0) return null;
+
+    final int bufferSize = 6 * patternLength;
+    char[] buffer = new char[bufferSize];
+
     BufferedReader text = new BufferedReader(textReader);
+    int readCount = text.read(buffer, 0, bufferSize);
+    int numberOfElements = readCount;
+    if (readCount == -1) return null;
 
-    ArrayList<Integer> result = zFunction(pattern, text);
+    int shift = 0;
+    int[] z;
+    ArrayList<Integer> result = new ArrayList<>();
 
-    pattern.close();
+    textProcessing:
+    while (readCount != -1 && numberOfElements != 0) {
+      z = zFunction(pattern, new String(buffer, 0, numberOfElements));
+
+      for (int i = patternLength; i < z.length; ++i) {
+        int indexInBuffer = i - patternLength;
+
+        if (z[i] == patternLength) {
+          result.add(indexInBuffer + shift);
+        } else if (z[i] > 0 && bufferSize - indexInBuffer < patternLength) {
+          int afterIndex = numberOfElements - indexInBuffer;
+          buffer = Arrays.copyOfRange(buffer, indexInBuffer, bufferSize + indexInBuffer);
+          shift += indexInBuffer;
+          readCount = text.read(buffer, afterIndex, indexInBuffer);
+          numberOfElements = afterIndex;
+          if (readCount != -1) {
+            numberOfElements += readCount;
+          }
+          continue textProcessing;
+        }
+      }
+
+      shift += numberOfElements;
+      readCount = text.read(buffer, 0, bufferSize);
+      numberOfElements = readCount;
+    }
+
     text.close();
     return result;
-  }
-
-  public static void main(String[] args) throws IOException {
-    SearchSubstring.search(new FileReader("pattern1.txt"), new FileReader("text1.txt"));
   }
 }
 

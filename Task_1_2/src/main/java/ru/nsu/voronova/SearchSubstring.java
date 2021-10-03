@@ -6,7 +6,15 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * SearchSubstring is a class with the method {@link #search(String, Reader)}, which can be used for searching
+ * substring in the string.
+ *
+ * @author Ann Voronova.
+ */
+
 public class SearchSubstring {
+
   private static int[] zFunction(String pattern, String text) {
     int patternLength = pattern.length();
     int textLength = text.length();
@@ -32,6 +40,16 @@ public class SearchSubstring {
 
     return z;
   }
+
+
+  /**
+   * The main method, which can be applied for searching substring in the string. Uses z-function algorithm for searching.
+   *
+   * @param pattern    - the substring, the indices of the occurrence of which in the string are to be found.
+   * @param textReader - the character stream from which the string will be read.
+   * @return array with all indices of the occurrence of substring in the string.
+   * @see <a href="https://compscicenter.ru/courses/algorithms-2/nsk/2018-spring/classes/3762/"}>Computer Science Center</a>
+   */
 
   public static ArrayList<Integer> search(String pattern, Reader textReader) throws IOException {
     int patternLength = pattern.length();

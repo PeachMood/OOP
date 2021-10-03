@@ -15,6 +15,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * SearchSubstringTest is a class for testing a {@link SearchSubstring} class.
+ * Includes tests with randomly generated strings.
+ *
+ * @author Ann Voronova.
+ */
+
 class SearchSubstringTest {
 
   private String generateRandomText(String pattern, int numberOfPatterns, int textLength) {

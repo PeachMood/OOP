@@ -10,6 +10,7 @@ public class MyStack<E> implements Iterable<E> {
   private E[] stack;
   private int count;
   private int capacity;
+  final private static int DEFAULT_CAPACITY = 64;
 
   @SuppressWarnings("unchecked")
   public MyStack(int capacity) {
@@ -19,12 +20,12 @@ public class MyStack<E> implements Iterable<E> {
   }
 
   public MyStack() {
-    this(64);
+    this(DEFAULT_CAPACITY);
   }
 
   private E[] grow(int newCapacity) {
     capacity = newCapacity;
-    return Arrays.copyOf(stack, capacity);
+    return Arrays.copyOf(stack, newCapacity);
   }
 
   public void push(E element) {
@@ -32,13 +33,14 @@ public class MyStack<E> implements Iterable<E> {
       throw new IllegalArgumentException();
     }
     if (count == capacity) {
-      stack = grow(2 * capacity);
+      final int newCapacity = 2 * capacity;
+      stack = grow(newCapacity);
     }
     stack[count] = element;
     count++;
   }
 
-  public E pop() throws EmptyStackException {
+  public E pop() {
     if (count == 0) {
       throw new EmptyStackException();
     }
@@ -48,31 +50,42 @@ public class MyStack<E> implements Iterable<E> {
   }
 
   @SuppressWarnings("unchecked")
-  public void pushStack(MyStack<E> stack) {
-    int size = stack.count();
-    if (size != 0) {
-      E[] temp = (E[]) new Object[size];
-      for (int i = size - 1; i >= 0; --i) {
-        temp[i] = stack.pop();
-      }
-      for (int i = 0; i < size; ++i) {
-        this.push(temp[i]);
-        stack.push(temp[i]);
-      }
+  private E[] stackIntoArray(MyStack<E> stack) {
+    final int amount = stack.count();
+    E[] array = (E[]) new Object[amount];
+    for (int i = amount - 1; i >= 0; --i) {
+      array[i] = stack.pop();
     }
+    return array;
   }
 
-  @SuppressWarnings("unchecked")
-  public MyStack<E> popStack(int count) {
-    E[] temp = (E[]) new Object[count];
-    for (int i = count - 1; i >= 0; --i) {
-      temp[i] = this.pop();
+  public void pushStack(MyStack<E> src) {
+    final int amount = src.count();
+    if (amount == 0) {
+      return;
     }
+    E[] array = stackIntoArray(src);
+    if (count + amount >= capacity) {
+      final int newCapacity = 2 * (count + amount);
+      stack = grow(newCapacity);
+    }
+    System.arraycopy(array, 0, stack, count, amount);
+    count += amount;
+  }
 
-    MyStack<E> result = new MyStack<>();
-    for (int i = 0; i < count; ++i) {
-      result.push(temp[i]);
+  public MyStack<E> popStack(int amount) {
+    if (amount < 0) {
+      throw new IllegalArgumentException();
     }
+    if (amount > count) {
+      throw new EmptyStackException();
+    }
+    MyStack<E> result = new MyStack<>();
+    for (int i = count - amount; i < count; ++i) {
+      result.push(this.stack[i]);
+      this.stack[i] = null;
+    }
+    count -= amount;
     return result;
   }
 

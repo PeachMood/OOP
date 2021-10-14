@@ -11,6 +11,7 @@ public class MyStack<E> implements Iterable<E> {
   private int count;
   private int capacity;
   final private static int DEFAULT_CAPACITY = 64;
+  final private static int GROW_VALUE = 2;
 
   @SuppressWarnings("unchecked")
   public MyStack(int capacity) {
@@ -33,8 +34,7 @@ public class MyStack<E> implements Iterable<E> {
       throw new IllegalArgumentException();
     }
     if (count == capacity) {
-      final int newCapacity = 2 * capacity;
-      stack = grow(newCapacity);
+      stack = grow(GROW_VALUE * capacity);
     }
     stack[count] = element;
     count++;
@@ -66,8 +66,7 @@ public class MyStack<E> implements Iterable<E> {
     }
     E[] array = stackIntoArray(src);
     if (count + amount >= capacity) {
-      final int newCapacity = 2 * (count + amount);
-      stack = grow(newCapacity);
+      stack = grow(GROW_VALUE * (count + amount));
     }
     System.arraycopy(array, 0, stack, count, amount);
     count += amount;

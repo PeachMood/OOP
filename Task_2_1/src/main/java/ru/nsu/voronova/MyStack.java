@@ -49,26 +49,15 @@ public class MyStack<E> implements Iterable<E> {
     return value;
   }
 
-  @SuppressWarnings("unchecked")
-  private E[] stackIntoArray(MyStack<E> stack) {
-    final int amount = stack.count();
-    E[] array = (E[]) new Object[amount];
-    for (int i = amount - 1; i >= 0; --i) {
-      array[i] = stack.pop();
-    }
-    return array;
-  }
-
-  public void pushStack(MyStack<E> src) {
-    final int amount = src.count();
+  public void pushStack(MyStack<E> source) {
+    final int amount = source.count();
     if (amount == 0) {
       return;
     }
-    E[] array = stackIntoArray(src);
     if (count + amount >= capacity) {
       stack = grow(GROW_VALUE * (count + amount));
     }
-    System.arraycopy(array, 0, stack, count, amount);
+    System.arraycopy(source.stack, 0, stack, count, amount);
     count += amount;
   }
 

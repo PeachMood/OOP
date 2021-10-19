@@ -51,8 +51,8 @@ public class Diploma {
   }
 
   public boolean isHonorsDegree() {
-    if (satisfactoryInRecordBook == 0) return true;
-    if (excellentInSupplement / numberOfSubjects >= 0.75) return true;
+    if (satisfactoryInRecordBook != 0) return false;
+    if (excellentInSupplement / numberOfSubjects < 0.75) return false;
     return qualifyingWork != null && qualifyingWork.grade() == Grade.EXCELLENT;
   }
 }

@@ -29,6 +29,14 @@ public class Semester {
     return sumOfGrades;
   }
 
+  public Subject getSubjectByName(String name) {
+    Subject subject = null;
+    if (subjects.containsKey(name)) {
+      subject = subjects.get(name);
+    }
+    return subject;
+  }
+
   public void addAttestation(String name, Grade grade, String teacher) {
     if (subjects.containsKey(name)) {
       System.out.println("You cannot overwrite the attestation results.");
@@ -39,4 +47,5 @@ public class Semester {
     Subject subject = new Subject(name, grade, teacher);
     subjects.put(name, subject);
   }
+
 }

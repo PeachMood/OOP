@@ -1,5 +1,7 @@
 package ru.nsu.voronova;
 
+import java.util.ArrayList;
+
 public class RecordBook {
   private final int recordBookNumber;
   private final Student student;
@@ -54,6 +56,19 @@ public class RecordBook {
 
   public int getCurrentSemester() {
     return student.getCurrentSemester();
+  }
+
+  public Subject[] getSubjectResults(String name) {
+    ArrayList<Subject> result = new ArrayList<>();
+    for (Semester semester : semesters) {
+      if (semester != null) {
+        Subject subject = semester.getSubjectByName(name);
+        if (subject != null) {
+          result.add(subject);
+        }
+      }
+    }
+    return result.toArray(new Subject[0]);
   }
 
   public void setCurrentSemester(int semesterNumber) {
@@ -125,7 +140,7 @@ public class RecordBook {
 
   public boolean hasHighScholarship() {
     int currentSemester = student.getCurrentSemester() - 1;
-    if (currentSemester < 2) return true;
+    if (currentSemester < 2) return false;
     Semester semester1 = semesters[currentSemester - 2];
     Semester semester2 = semesters[currentSemester - 1];
     if (semester1 == null || semester2 == null) {

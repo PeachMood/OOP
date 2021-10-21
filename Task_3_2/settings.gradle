@@ -1,2 +1,3 @@
 rootProject.name = 'Task_3_2'
+include 'RecordBook'
 

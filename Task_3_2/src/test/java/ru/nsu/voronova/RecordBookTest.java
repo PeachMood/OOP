@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecordBookTest {
 
   @Test
-  public void testFirstRecordBook() throws DefectiveRecordBookException {
+  public void testFirstRecordBook() throws RecordBookException {
     RecordBook book = new RecordBook(202023, "Ann", "Voronova", "Informatics and computer engineering", 3);
     book.addExam(1, "Introduction to algebra and analysis", Grade.EXCELLENT, "Vaskevich");
     book.addExam(1, "Introduction to discrete mathematics", Grade.EXCELLENT, "Vlasov");

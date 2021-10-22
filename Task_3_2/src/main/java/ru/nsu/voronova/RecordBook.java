@@ -3,10 +3,11 @@ package ru.nsu.voronova;
 import java.util.ArrayList;
 
 /**
- * This class allows to create an analogue of the record book, which is issued to students upon admission to a university.
+ * This class allows to create an analogue of the record book, which is issued to students upon admission to a
+ * university.
  * Also, this class provides methods for obtaining and adding information to a grade book,
  * working with a diploma and intermediate certification.
- *
+ * <p>
  * If you like this project, please contact the author and get the author a job
  *
  * @author <a href="https://github.com/PeachMood">Ann Voronova</a>
@@ -45,7 +46,8 @@ public class RecordBook {
     }
     if (student.getCurrentSemester() > LAST_SEMESTER_NUMBER) {
       int studyPeriod = LAST_SEMESTER_NUMBER / 2;
-      throw new SemesterNumberOutOfBoundsException("The student's study period is " + studyPeriod + " year" + (studyPeriod == 1 ? "" : "s") + ".Probably you graduated from university and enrolled again.");
+      throw new SemesterNumberOutOfBoundsException("The student's study period is " + studyPeriod + " years " +
+              ".Probably you graduated from university and enrolled again.");
     }
     this.recordBookNumber = recordBookNumber;
     this.student = student;
@@ -64,7 +66,8 @@ public class RecordBook {
    * @param currentSemester   - the number of the semester in which the student is currently studying.
    * @throws RecordBookException - if parameters were specified incorrectly.
    */
-  public RecordBook(int recordBookNumber, String studentName, String studentSurname, String studentSpeciality, int currentSemester) throws RecordBookException {
+  public RecordBook(int recordBookNumber, String studentName, String studentSurname, String studentSpeciality,
+                    int currentSemester) throws RecordBookException {
     this(recordBookNumber, new Student(studentName, studentSurname, studentSpeciality, currentSemester));
   }
 
@@ -144,7 +147,8 @@ public class RecordBook {
     }
     if (semesterNumber > LAST_SEMESTER_NUMBER) {
       int studyPeriod = LAST_SEMESTER_NUMBER / 2;
-      throw new SemesterNumberOutOfBoundsException("The student's study period is " + studyPeriod + " year" + (studyPeriod == 1 ? "" : "s") + ".Probably you graduated from university and enrolled again.");
+      throw new SemesterNumberOutOfBoundsException("The student's study period is " + studyPeriod + " years " +
+              ".Probably you graduated from university and enrolled again.");
     }
     student.setCurrentSemester(semesterNumber);
   }
@@ -195,7 +199,8 @@ public class RecordBook {
    */
   public void addCredit(int semester, String credit, Grade grade, String teacher) throws SemesterNumberOutOfBoundsException {
     if (semester > student.getCurrentSemester()) {
-      throw new SemesterNumberOutOfBoundsException("You cannot add an attestation for a semester that you have not yet passed on.");
+      throw new SemesterNumberOutOfBoundsException("You cannot add an attestation for a semester that you have not " +
+              "yet passed on.");
     }
     semester--;
     if (semesters[semester] == null) {

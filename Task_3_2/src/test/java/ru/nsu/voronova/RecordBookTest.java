@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecordBookTest {
 
   @Test
-  public void testRecordBook_throwsException(){
+  public void testRecordBook_throwsException() {
     assertThrows(
             DefectiveRecordBookException.class,
             () -> new RecordBook(-5, "Ann", "Voronova", "Informatics and computer engineering", 3));
@@ -27,7 +27,7 @@ class RecordBookTest {
     double expected;
     double actual;
 
-    RecordBook book = new RecordBook(202023, "Ann", "Voronova",  "Informatics and computer engineering", 3);
+    RecordBook book = new RecordBook(202023, "Ann", "Voronova", "Informatics and computer engineering", 3);
     book.addExam(1, "Introduction to algebra and analysis", Grade.EXCELLENT, "Vaskevich");
     expected = 5.0;
     actual = book.getAverageScore();
@@ -55,9 +55,9 @@ class RecordBookTest {
     RecordBook book1 = new RecordBook(1994, "Kim", "Namjoon", "BTS", 8);
     assertFalse(book1.hasHonorsDegree());
 
-    book1.addExam(1,"Dancing", Grade.EXCELLENT, "Jhope");
-    book1.addExam(2,"Dancing", Grade.GOOD, "Jhope");
-    book1.addExam(3,"Dancing", Grade.EXCELLENT, "Jhope");
+    book1.addExam(1, "Dancing", Grade.EXCELLENT, "Jhope");
+    book1.addExam(2, "Dancing", Grade.GOOD, "Jhope");
+    book1.addExam(3, "Dancing", Grade.EXCELLENT, "Jhope");
     book1.addCredit(1, "Singing", Grade.EXCELLENT, "V");
     book1.addCredit(2, "Singing", Grade.EXCELLENT, "V");
     book1.addCredit(3, "Singing", Grade.GOOD, "V");
@@ -67,8 +67,8 @@ class RecordBookTest {
     assertTrue(book1.hasHonorsDegree());
 
     RecordBook book2 = new RecordBook(1993, "Kim", "Seok-jin", "BTS", 8);
-    book1.addExam(1,"Dancing", Grade.EXCELLENT, "Jhope");
-    book1.addExam(2,"Dancing", Grade.EXCELLENT, "Jhope");
+    book1.addExam(1, "Dancing", Grade.EXCELLENT, "Jhope");
+    book1.addExam(2, "Dancing", Grade.EXCELLENT, "Jhope");
     book1.addCredit(1, "Singing", Grade.SATISFACTORY, "V");
     book1.addCredit(2, "Singing", Grade.EXCELLENT, "V");
     book1.addCredit(3, "Singing", Grade.EXCELLENT, "V");
@@ -78,8 +78,8 @@ class RecordBookTest {
     assertFalse(book2.hasHonorsDegree());
 
     RecordBook book3 = new RecordBook(1993, "Park", "Jimin", "BTS", 8);
-    book1.addExam(1,"Dancing", Grade.EXCELLENT, "Jhope");
-    book1.addExam(2,"Smiling", Grade.EXCELLENT, "Jhope");
+    book1.addExam(1, "Dancing", Grade.EXCELLENT, "Jhope");
+    book1.addExam(2, "Smiling", Grade.EXCELLENT, "Jhope");
     book1.addCredit(1, "Singing", Grade.EXCELLENT, "V");
     book1.addCredit(2, "Reading", Grade.EXCELLENT, "V");
     book1.addQualifyingWork("Map of the Soul: 7", Grade.GOOD, "Billboard");
@@ -89,17 +89,17 @@ class RecordBookTest {
   @Test
   public void hasHighScholarship() throws RecordBookException {
     RecordBook book1 = new RecordBook(1994, "Kim", "Namjoon", "BTS", 5);
-    book1.addExam(1,"Dancing", Grade.SATISFACTORY, "Jhope");
+    book1.addExam(1, "Dancing", Grade.SATISFACTORY, "Jhope");
     book1.addCredit(1, "Drawing", Grade.FAIL, "Kim Seok-jin");
-    book1.addExam(3,"Dancing", Grade.EXCELLENT, "Jhope");
-    book1.addExam(4,"Smiling", Grade.EXCELLENT, "Jhope");
+    book1.addExam(3, "Dancing", Grade.EXCELLENT, "Jhope");
+    book1.addExam(4, "Smiling", Grade.EXCELLENT, "Jhope");
     book1.addCredit(3, "Singing", Grade.EXCELLENT, "V");
     book1.addCredit(4, "Reading", Grade.EXCELLENT, "V");
     assertTrue(book1.hasHighScholarship());
 
     RecordBook book2 = new RecordBook(1994, "Kim", "Seok-jin", "BTS", 3);
-    book2.addExam(2,"Dancing", Grade.EXCELLENT, "Jhope");
-    book2.addExam(2,"Smiling", Grade.SATISFACTORY, "Jhope");
+    book2.addExam(2, "Dancing", Grade.EXCELLENT, "Jhope");
+    book2.addExam(2, "Smiling", Grade.SATISFACTORY, "Jhope");
     book2.addCredit(2, "Singing", Grade.EXCELLENT, "V");
     book2.addCredit(3, "Reading", Grade.EXCELLENT, "V");
     book2.addExam(3, "Smiling", Grade.EXCELLENT, "Jhope");

@@ -29,7 +29,8 @@ public class Diploma {
   }
 
   /**
-   * Allows getting information about qualifying work in diploma. If qualifying work has not yet been added to the diploma, the method returns null.
+   * Allows getting information about qualifying work in diploma.
+   * If qualifying work has not yet been added to the diploma, the method returns null.
    *
    * @return qualifying work.
    */

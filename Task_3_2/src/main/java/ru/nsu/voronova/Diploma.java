@@ -67,9 +67,15 @@ public class Diploma {
     }
     if (!supplement.containsKey(name)) {
       numberOfSubjects++;
+      if (grade == Grade.EXCELLENT) {
+        excellentInSupplement++;
+      }
     } else {
       Subject inSupplement = supplement.get(name);
-      if (inSupplement.grade() != grade && grade == Grade.EXCELLENT) {
+      if (inSupplement.grade() == Grade.EXCELLENT) {
+        excellentInSupplement--;
+      }
+      if (grade == Grade.EXCELLENT) {
         excellentInSupplement++;
       }
     }

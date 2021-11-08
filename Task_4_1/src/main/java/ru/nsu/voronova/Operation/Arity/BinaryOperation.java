@@ -1,16 +1,25 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.Operation.Arity;
 
-import static ru.nsu.voronova.Arity.BINARY;
+import ru.nsu.voronova.Number.Complex;
+import ru.nsu.voronova.Operation.Exceptions.BadNumberTypeException;
+import ru.nsu.voronova.Operation.Exceptions.InvalidNumberArgumentsException;
+import ru.nsu.voronova.Operation.Exceptions.OperationException;
+import ru.nsu.voronova.Operation.Operation;
+
+import static ru.nsu.voronova.Operation.Arity.Arity.BINARY;
 
 public abstract class BinaryOperation extends Operation {
   public BinaryOperation() {
     super(BINARY);
   }
 
-  public abstract Number eval2(Double number1, Double number2);
-  public abstract Number eval2(Double number1, Complex number2);
-  public abstract Number eval2(Complex number1, Double number2);
-  public abstract Number eval2(Complex number1, Complex number2);
+  public abstract Number eval2(Double number1, Double number2) throws OperationException;
+
+  public abstract Number eval2(Double number1, Complex number2) throws OperationException;
+
+  public abstract Number eval2(Complex number1, Double number2) throws OperationException;
+
+  public abstract Number eval2(Complex number1, Complex number2) throws OperationException;
 
   @Override
   public Number eval(Number... arguments) throws OperationException {

@@ -1,7 +1,7 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.Operation.Exceptions;
 
 public class BadNumberTypeException extends OperationException {
-  public BadNumberTypeException(){
+  public BadNumberTypeException() {
     super();
   }
 

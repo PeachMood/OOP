@@ -1,7 +1,7 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.Operation.Exceptions;
 
 public class InvalidNumberArgumentsException extends OperationException {
-  public InvalidNumberArgumentsException(){
+  public InvalidNumberArgumentsException() {
     super();
   }
 }

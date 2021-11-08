@@ -1,4 +1,4 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.Operation.Arity;
 
 public enum Arity {
   UNARY(1),

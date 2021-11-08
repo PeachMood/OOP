@@ -1,6 +1,12 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.Operation.Arity;
 
-import static ru.nsu.voronova.Arity.UNARY;
+import ru.nsu.voronova.Number.Complex;
+import ru.nsu.voronova.Operation.Exceptions.BadNumberTypeException;
+import ru.nsu.voronova.Operation.Exceptions.InvalidNumberArgumentsException;
+import ru.nsu.voronova.Operation.Exceptions.OperationException;
+import ru.nsu.voronova.Operation.Operation;
+
+import static ru.nsu.voronova.Operation.Arity.Arity.UNARY;
 
 public abstract class UnaryOperation extends Operation {
   public UnaryOperation() {
@@ -8,7 +14,8 @@ public abstract class UnaryOperation extends Operation {
   }
 
   public abstract Number eval1(Double number);
-  public abstract Number eval1(Complex number);
+
+  public abstract Number eval1(Complex number) throws OperationException;
 
   @Override
   public Number eval(Number... arguments) throws OperationException {

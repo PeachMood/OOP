@@ -1,4 +1,4 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.Operation.Exceptions;
 
 public class OperationException extends Exception {
   public OperationException() {

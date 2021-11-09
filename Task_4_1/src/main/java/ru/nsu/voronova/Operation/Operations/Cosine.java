@@ -3,7 +3,7 @@ package ru.nsu.voronova.Operation.Operations;
 import ru.nsu.voronova.Number.Complex;
 import ru.nsu.voronova.Operation.Arity.UnaryOperation;
 
-public class Cosinus extends UnaryOperation {
+public class Cosine extends UnaryOperation {
   @Override
   public Number eval1(Double number) {
     return Math.cos(number);

@@ -41,7 +41,7 @@ public class Multiplication extends BinaryOperation {
       return eval2(realPart2, number1);
     }
 
-    double resultRealPart = realPart1 * imaginaryPart1 - realPart2 * imaginaryPart2;
+    double resultRealPart = realPart1 * realPart2 - imaginaryPart1 * imaginaryPart2;
     double resultImaginaryPart = realPart1 * imaginaryPart2 + realPart2 * imaginaryPart1;
     return new Complex(resultRealPart, resultImaginaryPart);
   }

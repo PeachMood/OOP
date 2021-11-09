@@ -40,7 +40,7 @@ public class Division extends BinaryOperation {
 
     double sumOfSquares = realPart2 * realPart2 + imaginaryPart2 * imaginaryPart2;
     double resultRealPart = (realPart1 * realPart2 + imaginaryPart1 * imaginaryPart2) / sumOfSquares;
-    double resultImaginaryPart = (realPart2 * imaginaryPart1 + realPart1 * imaginaryPart2) / sumOfSquares;
+    double resultImaginaryPart = (realPart2 * imaginaryPart1 - realPart1 * imaginaryPart2) / sumOfSquares;
     return new Complex(resultRealPart, resultImaginaryPart);
   }
 }

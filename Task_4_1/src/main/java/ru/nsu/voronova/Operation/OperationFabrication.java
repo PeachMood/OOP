@@ -10,7 +10,7 @@ public class OperationFabrication {
       case "log" -> operation = new Logarithm();
       case "sqrt" -> operation = new SquareRoot();
       case "sin" -> operation = new Sinus();
-      case "cos" -> operation = new Cosinus();
+      case "cos" -> operation = new Cosine();
       case "deg" -> operation = new Degrees();
       case "pow" -> operation = new Power();
       case "+" -> operation = new Addition();

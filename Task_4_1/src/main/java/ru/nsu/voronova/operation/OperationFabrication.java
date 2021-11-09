@@ -3,11 +3,6 @@ package ru.nsu.voronova.operation;
 import ru.nsu.voronova.operation.operations.*;
 
 public class OperationFabrication {
-  private Operation operation;
-
-  public OperationFabrication() {
-  }
-
   public static Operation getOperation(String operator) {
     return switch (operator) {
       case "log" -> new Logarithm();

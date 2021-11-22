@@ -45,7 +45,7 @@ public class Notebook {
     notebook = newNotebook;
   }
 
-  public String getTitle(){
+  public String getTitle() {
     return title;
   }
 
@@ -54,6 +54,9 @@ public class Notebook {
   }
 
   public Note[] getNotesByKeywords(String[] keywords) {
+    if (keywords == null) {
+      throw new NullPointerException();
+    }
     Stream<Note> notebookStream = Arrays.stream(getAllNotes());
     for (String keyword : keywords) {
       notebookStream = notebookStream.filter(note -> note.getTitle().contains(keyword));
@@ -64,14 +67,15 @@ public class Notebook {
   public Note[] getNotesByDate(Date after) {
     Stream<Note> notebookStream = Arrays.stream(getAllNotes());
     return notebookStream
-            .filter(note -> note.getCreationDate().after(after))
+            .filter(note -> (note.getCreationDate().after(after) || note.getCreationDate().equals(after)))
             .toArray(Note[]::new);
   }
 
   public Note[] getNotesByDate(Date after, Date before) {
     Stream<Note> notebookStream = Arrays.stream(getAllNotes());
     return notebookStream
-            .filter(note -> note.getCreationDate().after(after) && note.getCreationDate().before(before))
+            .filter(note -> (note.getCreationDate().after(after) || note.getCreationDate().equals(after)))
+            .filter(note -> (note.getCreationDate().before(before) || note.getCreationDate().equals(before)))
             .toArray(Note[]::new);
   }
 
@@ -79,8 +83,8 @@ public class Notebook {
     Note[] byKeywords = getNotesByKeywords(keywords);
     Stream<Note> notebookStream = Arrays.stream(byKeywords);
     return notebookStream
-            .filter(note -> note.getCreationDate().after(after))
-            .filter(note -> note.getCreationDate().before(before))
+            .filter(note -> (note.getCreationDate().after(after) || note.getCreationDate().equals(after)))
+            .filter(note -> (note.getCreationDate().before(before) || note.getCreationDate().equals(before)))
             .toArray(Note[]::new);
   }
 

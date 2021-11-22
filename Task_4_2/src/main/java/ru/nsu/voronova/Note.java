@@ -3,7 +3,7 @@ package ru.nsu.voronova;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Note implements Comparable<Note> {
+public class Note {
   private final String title;
   private final String content;
   private final Date creationDate;
@@ -36,12 +36,18 @@ public class Note implements Comparable<Note> {
   }
 
   @Override
-  public int compareTo(Note anotherNote) {
-    Date anotherDate = anotherNote.creationDate;
-    if (creationDate.after(anotherDate))
-      return 1;
-    if (creationDate.before(anotherDate))
-      return -1;
-    return 0;
+  public boolean equals(Object object) {
+    if (object == this) {
+      return true;
+    }
+
+    if (!(object instanceof Note note)) {
+      return false;
+    }
+
+    String title = note.getTitle();
+    String content = note.getContent();
+    Date creationDate = note.getCreationDate();
+    return this.title.equals(title) && this.content.equals(content) && this.creationDate.equals(creationDate);
   }
 }

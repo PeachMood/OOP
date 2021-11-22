@@ -13,7 +13,7 @@ public class NotebookApplication {
 
   public NotebookApplication() {
     options = new Options();
-    Option title = Option.builder("t").hasArg().optionalArg(false).build();
+    Option title = Option.builder("title").hasArg().optionalArg(false).build();
     Option add = Option.builder("add").numberOfArgs(2).optionalArg(false).build();
     Option remove = Option.builder("remove").hasArg().optionalArg(false).build();
     Option show = Option.builder("show").hasArgs().optionalArg(true).build();
@@ -25,8 +25,8 @@ public class NotebookApplication {
 
   private void add(Note note) throws IOException {
     Notebook notebook = new Notebook(json.getFileName());
-    notebook.addNotes(json.read());
     notebook.addNote(note);
+    notebook.addNotes(json.read());
     json.write(notebook.getAllNotes());
   }
 
@@ -84,8 +84,8 @@ public class NotebookApplication {
 
   private void parseLine(CommandLine line) throws IOException, java.text.ParseException {
     json = new JSON();
-    if (line.hasOption("t")) {
-      json = new JSON(line.getOptionValue("t"));
+    if (line.hasOption("title")) {
+      json = new JSON(line.getOptionValue("title"));
     }
 
     json.open();
@@ -105,7 +105,7 @@ public class NotebookApplication {
         show();
         return;
       }
-      if(values.length == 2) {
+      if (values.length == 2) {
         show(values[0], values[1]);
       }
       show(values[0], values[1], Arrays.copyOfRange(values, 2, values.length));
@@ -113,9 +113,13 @@ public class NotebookApplication {
     json.close();
   }
 
-  public void run(String[] args) throws IOException, ParseException, java.text.ParseException {
-    CommandLineParser parser = new DefaultParser();
-    CommandLine line = parser.parse(options, args);
-    parseLine(line);
+  public void run(String[] args) {
+    try {
+      CommandLineParser parser = new DefaultParser();
+      CommandLine line = parser.parse(options, args);
+      parseLine(line);
+    } catch (Exception exception) {
+      System.err.println(exception.getMessage());
+    }
   }
 }

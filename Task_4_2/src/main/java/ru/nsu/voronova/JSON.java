@@ -10,7 +10,6 @@ public class JSON {
   private final File file;
   private final String fileName;
   private BufferedReader fileReader;
-  private BufferedWriter fileWriter;
 
   public JSON() {
     this.fileName = DEFAULT_FILE_NAME;
@@ -56,7 +55,7 @@ public class JSON {
   }
 
   public void write(Note[] notes) throws IOException {
-    fileWriter = new BufferedWriter(new FileWriter(file, false));
+    BufferedWriter fileWriter = new BufferedWriter(new FileWriter(file, false));
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String content = gson.toJson(notes, Note[].class);
     fileWriter.append(content);

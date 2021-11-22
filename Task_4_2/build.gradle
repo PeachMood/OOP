@@ -10,12 +10,30 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'com.google.code.gson:gson:2.8.9'
-    implementation 'commons-cli:commons-cli:1.4'
+    implementation 'commons-cli:commons-cli:1.5.0'
 }
 
 test {
     useJUnitPlatform()
+
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "ru.nsu.voronova.ApplicationExecution"
+    }
+}
+
+task uberJar(type: Jar) {
+    manifest.from jar.manifest
+    archiveName "notebook.jar"
+    archiveClassifier = "uber"
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
 }

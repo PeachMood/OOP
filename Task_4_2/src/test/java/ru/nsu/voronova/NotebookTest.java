@@ -12,18 +12,18 @@ class NotebookTest {
   private Notebook notebook;
 
   @BeforeEach
-  void createNotebook() {
+  public void initialize() {
     notebook = new Notebook("Test");
   }
 
   @Test
   @DisplayName("Exception adding null note")
-  void addNote_throwsNullPointerException() {
+  public void addNote_throwsNullPointerException() {
     assertThrows(NullPointerException.class, () -> notebook.addNote(null));
   }
 
   @Test
-  void addNote() {
+  public void addNote() {
     String title = "Title 1";
     String content = "Content 1";
     notebook.addNote(title, content);
@@ -35,7 +35,7 @@ class NotebookTest {
 
   @Test
   @DisplayName("Adding several notes to a notebook")
-  void addNotes() {
+  public void addNotes() {
     Note[] expected = new Note[2];
     expected[0] = new Note("Title 2", "Content 2");
     expected[1] = new Note("Title 3", "Content 3");
@@ -47,7 +47,7 @@ class NotebookTest {
 
   @Test
   @DisplayName("Deleting note from a notebook")
-  void removeNote() {
+  public void removeNote() {
     String title = "Title 4";
     String content = "Content 4";
     notebook.addNote(title, content);
@@ -58,8 +58,14 @@ class NotebookTest {
   }
 
   @Test
+  @DisplayName("Getting notebook title")
+  public void getTitle() {
+    assertEquals("Test", notebook.getTitle());
+  }
+
+  @Test
   @DisplayName("Retrieving all notes from a notebook")
-  void getAllNotes() {
+  public void getAllNotes() {
     Note[] expected = new Note[2];
     expected[0] = new Note("Title 5", "Content 5");
     expected[1] = new Note("Title 6", "Content 6");
@@ -70,12 +76,18 @@ class NotebookTest {
     notebook.removeNote("Title 8");
 
     Note[] actual = notebook.getAllNotes();
-    assertArrayEquals(actual, expected);
+    assertArrayEquals(expected, actual);
+  }
+
+  @Test
+  @DisplayName("Exception retrieving by keywords from null array")
+  public void getNotesByKeywords_throwsNullPointerException() {
+    assertThrows(NullPointerException.class, () -> notebook.getNotesByKeywords(null));
   }
 
   @Test
   @DisplayName("Retrieving all notes from a notebook containing words from the list in the title")
-  void getNotesByKeywords() {
+  public void getNotesByKeywords() {
     Note[] expected = new Note[2];
     expected[0] = new Note("Title 9", "Content 9");
     expected[1] = new Note("Title 10", "Content 10");
@@ -88,7 +100,7 @@ class NotebookTest {
 
   @Test
   @DisplayName("Retrieving all notes from a notebook, created after specified time")
-  void getNotesByDate() {
+  public void getNotesByDate() {
     Note[] expected = new Note[3];
     expected[0] = new Note("Title 11", "Content 11");
     expected[1] = new Note("Title 12", "Content 12");
@@ -101,7 +113,7 @@ class NotebookTest {
 
   @Test
   @DisplayName("Retrieving all notes from a notebook, created between specified time range")
-  void testGetNotesByDate() throws InterruptedException {
+  public void testGetNotesByDate() throws InterruptedException {
     Note[] expected = new Note[2];
     expected[0] = new Note("Title 14", "Content 14");
     expected[1] = new Note("Title 15", "Content 15");
@@ -116,7 +128,7 @@ class NotebookTest {
 
   @Test
   @DisplayName("Retrieving all notes from a notebook by date and keywords")
-  void getNotesByDateAndKeywords() throws InterruptedException {
+  public void getNotesByDateAndKeywords() throws InterruptedException {
     Note[] expected = new Note[2];
     expected[0] = new Note("Title 17", "Content 17");
     expected[1] = new Note("Title 18", "Content 18");

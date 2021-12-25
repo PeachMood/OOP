@@ -2,14 +2,30 @@ package ru.nsu.voronova;
 
 import java.util.*;
 
+/**
+ * A general tree implementation. Provides methods for storing data and its modification.
+ * Implements {@link Collection} interface.
+ *
+ * @param <E> - the type of elements in the tree.
+ */
 public class Tree<E> implements Collection<E> {
     private E root;
     private final List<Tree<E>> children;
 
+    /**
+     * Creates a tree of zero size and without children.
+     */
     public Tree() {
         children = new ArrayList<>();
     }
 
+    /**
+     * Gets a subtree with specified value in the root for the tree.
+     *
+     * @param element - the value contained in the root of the searched subtree.
+     * @return a subtree if it is contained in the original tree.
+     * @throws NoSuchElementException if the original tree does not contain a subtree with specified value.
+     */
     public Tree<E> get(E element) throws NoSuchElementException {
         Queue<Tree<E>> processing = new ArrayDeque<>();
         processing.offer(this);
@@ -25,6 +41,11 @@ public class Tree<E> implements Collection<E> {
         throw new NoSuchElementException();
     }
 
+    /**
+     * Returns the number of children in the tree including root.
+     *
+     * @return the size of the tree.
+     */
     @Override
     public int size() {
         int size = 0;
@@ -34,11 +55,22 @@ public class Tree<E> implements Collection<E> {
         return this.root != null ? size + 1 : size;
     }
 
+    /**
+     * Determines if the tree is empty.
+     *
+     * @return true if the tree does not have any children and a root, false - otherwise.
+     */
     @Override
     public boolean isEmpty() {
         return size() == 0;
     }
 
+    /**
+     * Determines if the tree contains an element with specified value.
+     *
+     * @param object - The value of the searched element.
+     * @return true if the tree contains the searched element, false - otherwise.
+     */
     @Override
     public boolean contains(Object object) {
         if (object.equals(root)) {
@@ -53,11 +85,21 @@ public class Tree<E> implements Collection<E> {
         return false;
     }
 
+    /**
+     * Provides a class for iterating through the elements of the tree.
+     *
+     * @return a class implementing the {@link Iterator} interface.
+     */
     @Override
     public Iterator<E> iterator() {
         return depthFirstSearchIterator();
     }
 
+    /**
+     * Provides a class for iterating through tree elements based on a depth-first search algorithm.
+     *
+     * @return a class implementing the {@link Iterator} interface.
+     */
     public Iterator<E> depthFirstSearchIterator() {
         return new Iterator<>() {
             private final Set<Tree<E>> visited = new HashSet<>();
@@ -65,11 +107,22 @@ public class Tree<E> implements Collection<E> {
             private final int size = size();
             private int count = 0;
 
+            /**
+             * Returns true if next would return an element rather than throwing an exception.
+             *
+             * @return true if the iteration has more elements.
+             */
             @Override
             public boolean hasNext() {
                 return count < size;
             }
 
+            /**
+             * Returns the next element in the iteration.
+             *
+             * @return the next element in the iteration.
+             * @throws NoSuchElementException – if the iteration has no more elements.
+             */
             @Override
             public E next() throws NoSuchElementException {
                 if (!hasNext()) {
@@ -95,6 +148,11 @@ public class Tree<E> implements Collection<E> {
         };
     }
 
+    /**
+     * Provides a class for iterating through tree elements based on a breadth-first search algorithm.
+     *
+     * @return a class implementing the {@link Iterator} interface.
+     */
     public Iterator<E> breadthFirstSearchIterator() {
         return new Iterator<>() {
             private final Set<Tree<E>> visited = new HashSet<>();
@@ -102,11 +160,22 @@ public class Tree<E> implements Collection<E> {
             private final int size = size();
             private int count = 0;
 
+            /**
+             * Returns true if next would return an element rather than throwing an exception.
+             *
+             * @return true if the iteration has more elements.
+             */
             @Override
             public boolean hasNext() {
                 return count < size;
             }
 
+            /**
+             * Returns the next element in the iteration.
+             *
+             * @return the next element in the iteration.
+             * @throws NoSuchElementException – if the iteration has no more elements.
+             */
             @Override
             public E next() throws NoSuchElementException, ConcurrentModificationException {
                 if (!hasNext()) {
@@ -132,6 +201,11 @@ public class Tree<E> implements Collection<E> {
         };
     }
 
+    /**
+     * Returns an array containing all the elements of the tree.
+     *
+     * @return an array with all the elements from the tree.
+     */
     @Override
     public Object[] toArray() {
         int index = 0;
@@ -142,6 +216,16 @@ public class Tree<E> implements Collection<E> {
         return array;
     }
 
+    /**
+     * Returns an array containing all the elements in the tree.
+     * The runtime type of the returned array is that of the specified array.
+     * If the tree fits in the specified array, it is returned therein.
+     * Otherwise, a new array is allocated with the runtime type of the specified array and the size of the tree.
+     *
+     * @param array – the array into which the elements of the tree are to be stored.
+     * @throws ClassCastException – if the runtime type of the specified array is not a supertype of the runtime type of every element in the tree.
+     *                            NullPointerException – if the specified array is null.
+     */
     @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) throws NullPointerException, ClassCastException {
@@ -161,6 +245,12 @@ public class Tree<E> implements Collection<E> {
         return array;
     }
 
+    /**
+     * Adds a new element as the child of the root.
+     *
+     * @param element - the element should be added.
+     * @return - true if the tree changed as a result of the call.
+     */
     @Override
     public boolean add(E element) {
         if (contains(element)) {
@@ -178,6 +268,13 @@ public class Tree<E> implements Collection<E> {
         return true;
     }
 
+    /**
+     * Adds a new element as the child of the specified element.
+     *
+     * @param element - the element should be added.
+     * @param parent  - the tree node to which the new element should be added.
+     * @return - true if the tree changed as a result of the call.
+     */
     public boolean add(E element, E parent) {
         if (contains(element)) {
             return false;
@@ -201,6 +298,12 @@ public class Tree<E> implements Collection<E> {
         return false;
     }
 
+    /**
+     * Removes subtree with specified element as a root from the tree, if it is present.
+     *
+     * @param object - root of subtree to be removed from the tree.
+     * @return true if a subtree was removed as a result of this call, false - otherwise.
+     */
     @Override
     public boolean remove(Object object) {
         if (object.equals(root)) {
@@ -223,6 +326,12 @@ public class Tree<E> implements Collection<E> {
         return false;
     }
 
+    /**
+     * Returns true if the tree contains all the elements in the specified collection.
+     *
+     * @param collection - collection to be checked for containment in the tree.
+     * @return true if the tree contains all the elements in the specified collection.
+     */
     @Override
     public boolean containsAll(Collection<?> collection) {
         for (Object object : collection) {
@@ -233,6 +342,12 @@ public class Tree<E> implements Collection<E> {
         return true;
     }
 
+    /**
+     * Adds all the elements in the specified collection to the tree.
+     *
+     * @param collection - collection containing elements to be added to the tree.
+     * @return true if the tree changed as a result of the call.
+     */
     @Override
     public boolean addAll(Collection<? extends E> collection) {
         for (E element : collection) {
@@ -243,6 +358,12 @@ public class Tree<E> implements Collection<E> {
         return true;
     }
 
+    /**
+     * Removes all the subtrees, which contain as the root elements from the specified collection.
+     *
+     * @param collection - collection containing elements to be removed from this collection.
+     * @return true if this collection changed as a result of the call
+     */
     @Override
     public boolean removeAll(Collection<?> collection) {
         for (Object element : collection) {
@@ -253,6 +374,13 @@ public class Tree<E> implements Collection<E> {
         return true;
     }
 
+    /**
+     * Retains only the elements in the tree that are contained in the specified collection.
+     * Removes from this collection all of its subtrees, which contain elements, that are not contained in the specified collection, as the root.
+     *
+     * @param collection - collection containing elements to be retained in the tree.
+     * @return true if this collection changed as a result of the call.
+     */
     @Override
     public boolean retainAll(Collection<?> collection) {
         int retained = size();
@@ -271,6 +399,10 @@ public class Tree<E> implements Collection<E> {
         return retained != size();
     }
 
+    /**
+     * Removes all the elements from the tree.
+     * The collection will be empty after this method returns.
+     */
     @Override
     public void clear() {
         root = null;

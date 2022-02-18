@@ -18,7 +18,10 @@ public class PrimeSearch {
         return true;
     }
 
-    public boolean hasPrime(int[] array) throws ExecutionException, InterruptedException {
+    public boolean hasPrime(int[] array) throws ExecutionException, InterruptedException, NullPointerException {
+        if (array == null) {
+            throw new NullPointerException();
+        }
         for (int number : array) {
             if (isPrime(number))
                 return true;

@@ -7,7 +7,10 @@ public class ThreadPrimeSearch extends PrimeSearch {
     private final int THREADS_NUMBER = 10;
 
     @Override
-    public boolean hasPrime(int[] array) throws ExecutionException, InterruptedException {
+    public boolean hasPrime(int[] array) throws ExecutionException, InterruptedException, NullPointerException {
+        if (array == null) {
+            throw new NullPointerException();
+        }
         List<Integer> numberList = Arrays.stream(array).boxed().toList();
         Deque<Integer> deque = new ArrayDeque<>(numberList);
 

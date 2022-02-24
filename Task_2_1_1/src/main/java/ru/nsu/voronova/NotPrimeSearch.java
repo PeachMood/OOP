@@ -2,7 +2,7 @@ package ru.nsu.voronova;
 
 import java.util.concurrent.ExecutionException;
 
-public class PrimeSearch {
+public class NotPrimeSearch {
     public boolean isPrime(int number) {
         if (number <= 1) {
             return false;
@@ -18,12 +18,12 @@ public class PrimeSearch {
         return true;
     }
 
-    public boolean hasPrime(int[] array) throws ExecutionException, InterruptedException, NullPointerException {
+    public boolean search(int[] array) throws ExecutionException, InterruptedException, NullPointerException {
         if (array == null) {
             throw new NullPointerException();
         }
         for (int number : array) {
-            if (isPrime(number))
+            if (!isPrime(number))
                 return true;
         }
         return false;

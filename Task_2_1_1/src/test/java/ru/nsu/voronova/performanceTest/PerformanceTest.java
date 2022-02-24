@@ -3,9 +3,9 @@ package ru.nsu.voronova.performanceTest;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.jupiter.api.Test;
-import ru.nsu.voronova.PrimeSearch;
-import ru.nsu.voronova.StreamPrimeSearch;
-import ru.nsu.voronova.ThreadPrimeSearch;
+import ru.nsu.voronova.NotPrimeSearch;
+import ru.nsu.voronova.StreamNotPrimeSearch;
+import ru.nsu.voronova.ThreadNotPrimeSearch;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,21 +19,17 @@ public class PerformanceTest {
         if (size <= 0) {
             throw new IllegalArgumentException();
         }
-        int randomIndex = (int) (Math.random() * size);
         int[] array = new int[size];
-        Arrays.fill(array, 0, randomIndex, 20);
-        array[randomIndex] = 7;
-        if (randomIndex < size - 1) {
-            Arrays.fill(array, randomIndex + 1, size, 20);
-        }
+        Arrays.fill(array, 0, size - 1, 1073676287);
+        array[size - 1] = 187263196;
         return array;
     }
 
-    private long singleTest(PrimeSearch primeSearch, int[] array) throws ExecutionException, InterruptedException {
+    private long singleTest(NotPrimeSearch notPrimeSearch, int[] array) throws ExecutionException, InterruptedException {
         List<Long> results = new ArrayList<>();
         for (int i = 0; i < 3; ++i) {
             long time = System.nanoTime();
-            primeSearch.hasPrime(array);
+            notPrimeSearch.search(array);
             time = System.nanoTime() - time;
             results.add(time);
         }
@@ -43,17 +39,17 @@ public class PerformanceTest {
     @Test
     public void performanceTest() throws ExecutionException, InterruptedException, IOException {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        XYSeries series1 = new XYSeries("PrimeSearch");
-        XYSeries series2 = new XYSeries("ThreadPrimeSearch");
-        XYSeries series3 = new XYSeries("StreamPrimeSearch");
+        XYSeries series1 = new XYSeries("NotPrimeSearch");
+        XYSeries series2 = new XYSeries("ThreadNotPrimeSearch");
+        XYSeries series3 = new XYSeries("StreamNotPrimeSearch");
 
         for (int size = 10; size <= 1000000; size *= 10) {
             int[] array = createArray(size);
-            long time = singleTest(new PrimeSearch(), array);
+            long time = singleTest(new NotPrimeSearch(), array);
             series1.add(size, time);
-            time = singleTest(new ThreadPrimeSearch(), array);
+            time = singleTest(new ThreadNotPrimeSearch(), array);
             series2.add(size, time);
-            time = singleTest(new StreamPrimeSearch(), array);
+            time = singleTest(new StreamNotPrimeSearch(), array);
             series3.add(size, time);
         }
 

@@ -35,7 +35,7 @@ class ThreadNotPrimeSearchTest {
     public void search_largeData1() throws ExecutionException, InterruptedException {
         int size = 10000000;
         int[] array = new int[size];
-        Arrays.fill(array, 0, size, 1048561);
+        Arrays.fill(array, 0, size, 262411);
         assertFalse(new ThreadNotPrimeSearch().search(array));
     }
 

@@ -1,12 +1,14 @@
 package ru.nsu.voronova;
 
-public class Baker extends Consumer<Order> {
+public class Baker extends Producer {
     private int workingExperience;
-    private QueueBlocking<Order> storage;
+    private final QueueBlocking<Order> orders;
+    private final QueueBlocking<Order> storage;
+    private final long MAX_COOKING_TIME = 100;
 
     public Baker(int workingExperience, QueueBlocking<Order> orders, QueueBlocking<Order> storage) {
-        super(orders);
         this.workingExperience = workingExperience;
+        this.orders = orders;
         this.storage = storage;
     }
 
@@ -19,7 +21,9 @@ public class Baker extends Consumer<Order> {
     }
 
     @Override
-    public void consume() {
-
+    void produce() throws InterruptedException {
+        Order order = orders.get();
+        Thread.sleep(MAX_COOKING_TIME / workingExperience);
+        storage.put(order);
     }
 }

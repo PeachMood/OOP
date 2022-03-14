@@ -1,22 +1,23 @@
 package ru.nsu.voronova;
 
-public abstract class Consumer<T> implements Runnable {
+public abstract class Consumer implements Runnable {
     private boolean isRunning;
-    private QueueBlocking<T> queue;
 
-    public Consumer(QueueBlocking<T> queue) {
-        this.isRunning = false;
-        this.queue = queue;
-    }
-
-    public abstract void consume();
+    abstract void consume() throws InterruptedException;
 
     @Override
     public void run() {
-        consume();
+        isRunning = true;
+        while(isRunning) {
+            try {
+                consume();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
-    public void stop() {
+    public void stop(){
         isRunning = false;
     }
 }

@@ -1,18 +1,18 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.queue;
 
 import java.util.*;
 
-public class QueueBlocking<T> {
+public class SharedQueue<T> {
     private final int size;
     private final Deque<T> dequeue;
 
-    public QueueBlocking(int size) {
+    public SharedQueue(int size) {
         this.size = size;
         this.dequeue = new ArrayDeque<>();
     }
 
     public synchronized T get() throws InterruptedException {
-        while (dequeue.size() < 1) {
+        while (dequeue.isEmpty()) {
             wait();
         }
         T object = dequeue.pop();
@@ -20,13 +20,16 @@ public class QueueBlocking<T> {
         return object;
     }
 
-    public List<T> get(int amount) throws IllegalArgumentException, InterruptedException {
+    public synchronized List<T> get(int amount) throws IllegalArgumentException, InterruptedException {
         if (amount < 1 || amount > size) {
             throw new IllegalArgumentException();
         }
+        while (dequeue.isEmpty()) {
+            wait();
+        }
         List<T> objects = new ArrayList<>();
-        for (int i = 0; i < amount; ++i) {
-            objects.add(get());
+        while (!dequeue.isEmpty() || objects.size() != amount) {
+            objects.add(dequeue.pop());
         }
         return objects;
     }

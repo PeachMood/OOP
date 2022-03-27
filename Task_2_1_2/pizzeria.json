@@ -1,0 +1,32 @@
+{
+  "queueSize": 10,
+  "storageSize": 10,
+  "bakers": [
+    {
+      "id": 0,
+      "workingExperience": 2
+    },
+    {
+      "id": 1,
+      "workingExperience": 2
+    },
+    {
+      "id": 2,
+      "workingExperience": 3
+    }
+  ],
+  "couriers": [
+    {
+      "id": 0,
+      "bagCapacity": 3
+    },
+    {
+      "id": 1,
+      "bagCapacity": 2
+    },
+    {
+      "id": 2,
+      "bagCapacity": 2
+    }
+  ]
+}

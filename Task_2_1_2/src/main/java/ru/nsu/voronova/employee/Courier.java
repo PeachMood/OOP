@@ -2,7 +2,7 @@ package ru.nsu.voronova.employee;
 
 import ru.nsu.voronova.consumer.Consumer;
 import ru.nsu.voronova.order.Order;
-import ru.nsu.voronova.queue.SharedQueue;
+import ru.nsu.voronova.queue.MyBlockingDequeue;
 import ru.nsu.voronova.order.State;
 
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.Random;
 import static ru.nsu.voronova.order.State.*;
 
 public class Courier extends Employee implements Consumer<List<Order>> {
-    private static final long MAX_DELIVERY_TIME = 1000;
+    private static final long MAX_DELIVERY_TIME = 100000;
     private int bagCapacity;
     private List<Order> orders;
-    private final SharedQueue<Order> storage;
+    private final MyBlockingDequeue<Order> storage;
     private final Random random;
 
-    public Courier(int id, int bagCapacity, SharedQueue<Order> storage) {
+    public Courier(int id, int bagCapacity, MyBlockingDequeue<Order> storage) {
         super(id);
         this.bagCapacity = bagCapacity;
         this.storage = storage;

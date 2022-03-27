@@ -2,11 +2,11 @@ package ru.nsu.voronova.queue;
 
 import java.util.*;
 
-public class SharedQueue<T> {
+public class MyBlockingDequeue<T> {
     private final int size;
     private final Deque<T> dequeue;
 
-    public SharedQueue(int size) {
+    public MyBlockingDequeue(int size) {
         this.size = size;
         this.dequeue = new ArrayDeque<>();
     }
@@ -28,7 +28,7 @@ public class SharedQueue<T> {
             wait();
         }
         List<T> objects = new ArrayList<>();
-        while (!dequeue.isEmpty() || objects.size() != amount) {
+        while (!dequeue.isEmpty() && objects.size() != amount) {
             objects.add(dequeue.pop());
         }
         return objects;

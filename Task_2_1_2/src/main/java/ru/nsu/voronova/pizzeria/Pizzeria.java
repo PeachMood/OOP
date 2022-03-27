@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Pizzeria implements Runnable {
-    private boolean isRunning;
+    private boolean runPizzeria;
     private List<Baker> bakers;
     private List<Courier> couriers;
     private final Customers customers;
@@ -40,7 +40,7 @@ public class Pizzeria implements Runnable {
     }
 
     public Pizzeria(PizzeriaJSON settings) {
-        this.isRunning = false;
+        this.runPizzeria = false;
         this.queue = new MyBlockingDequeue<>(settings.queueSize());
         this.storage = new MyBlockingDequeue<>(settings.storageSize());
         this.customers = new Customers(this.queue);
@@ -50,7 +50,7 @@ public class Pizzeria implements Runnable {
 
     @Override
     public void run() {
-        isRunning = true;
+        runPizzeria = true;
         ExecutorService bakersThreadPool = Executors.newFixedThreadPool(bakers.size());
         ExecutorService couriersThreadPool = Executors.newFixedThreadPool(couriers.size());
         bakers.forEach(bakersThreadPool::execute);
@@ -58,12 +58,12 @@ public class Pizzeria implements Runnable {
         Thread customersThread = new Thread(customers);
         customersThread.start();
         System.out.println("The pizzeria is up and running!");
-        while (isRunning && !bakersThreadPool.isTerminated() && !couriersThreadPool.isTerminated()) {
+        while (runPizzeria && !bakersThreadPool.isTerminated() && !couriersThreadPool.isTerminated()) {
         }
         if (bakersThreadPool.isTerminated() || couriersThreadPool.isTerminated()) {
             System.out.println("Oops, something went wrong. The pizzeria is closed for a technical break.");
         }
-        isRunning = false;
+        runPizzeria = false;
         bakersThreadPool.shutdownNow();
         couriersThreadPool.shutdownNow();
         customers.stop();
@@ -71,6 +71,6 @@ public class Pizzeria implements Runnable {
 
     public void stop() {
         System.out.println("The pizzeria is closed. Come visit us tomorrow!");
-        isRunning = false;
+        runPizzeria = false;
     }
 }

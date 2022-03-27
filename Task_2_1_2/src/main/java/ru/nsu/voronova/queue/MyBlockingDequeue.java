@@ -11,6 +11,14 @@ public class MyBlockingDequeue<T> {
         this.dequeue = new ArrayDeque<>();
     }
 
+    public synchronized boolean isEmpty() {
+        return dequeue.size() == 0;
+    }
+
+    public synchronized int getSize() {
+        return dequeue.size();
+    }
+
     public synchronized T get() throws InterruptedException {
         while (dequeue.isEmpty()) {
             wait();

@@ -2,11 +2,11 @@ package ru.nsu.voronova.employee;
 
 public abstract class Employee implements Runnable {
     private final int id;
-    private boolean isRunning;
+    private boolean runEmployee;
 
     public Employee(int id) {
         this.id = id;
-        this.isRunning = false;
+        this.runEmployee = false;
     }
 
     public int getId() {
@@ -17,13 +17,13 @@ public abstract class Employee implements Runnable {
 
     @Override
     public void run() {
-        isRunning = true;
-        while (isRunning) {
+        runEmployee = true;
+        while (runEmployee) {
             work();
         }
     }
 
     public void stop() {
-        isRunning = false;
+        runEmployee = false;
     }
 }

@@ -1,15 +1,15 @@
 package ru.nsu.voronova.customer;
 
-import ru.nsu.voronova.queue.SharedQueue;
+import ru.nsu.voronova.queue.MyBlockingDequeue;
 import ru.nsu.voronova.order.Order;
 
-public class CustomersThread implements Runnable {
+public class Customers implements Runnable {
     private boolean isRunning;
-    private final SharedQueue<Order> orders;
+    private final MyBlockingDequeue<Order> queue;
 
-    public CustomersThread(SharedQueue<Order> orders) {
+    public Customers(MyBlockingDequeue<Order> queue) {
         this.isRunning = false;
-        this.orders = orders;
+        this.queue = queue;
     }
 
     @Override
@@ -17,7 +17,7 @@ public class CustomersThread implements Runnable {
         isRunning = true;
         for (int i = 0; this.isRunning; ++i) {
             Order order = new Order(i);
-            new Customer(this.orders).produce(order);
+            new Customer(this.queue).produce(order);
         }
     }
 

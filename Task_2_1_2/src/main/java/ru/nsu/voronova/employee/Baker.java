@@ -3,7 +3,7 @@ package ru.nsu.voronova.employee;
 import ru.nsu.voronova.consumer.Consumer;
 import ru.nsu.voronova.order.Order;
 import ru.nsu.voronova.producer.Producer;
-import ru.nsu.voronova.queue.SharedQueue;
+import ru.nsu.voronova.queue.MyBlockingDequeue;
 
 import java.util.Random;
 
@@ -11,13 +11,13 @@ import static ru.nsu.voronova.order.State.COOKING;
 import static ru.nsu.voronova.order.State.IN_STOCK;
 
 public class Baker extends Employee implements Consumer<Order>, Producer<Order> {
-    private static final long MAX_COOKING_TIME = 500;
+    private static final long MAX_COOKING_TIME = 50000;
     private int workingExperience;
     private final Random random;
-    private final SharedQueue<Order> orders;
-    private final SharedQueue<Order> storage;
+    private final MyBlockingDequeue<Order> orders;
+    private final MyBlockingDequeue<Order> storage;
 
-    public Baker(int id, int workingExperience, SharedQueue<Order> orders, SharedQueue<Order> storage) {
+    public Baker(int id, int workingExperience, MyBlockingDequeue<Order> orders, MyBlockingDequeue<Order> storage) {
         super(id);
         this.workingExperience = workingExperience;
         this.random = new Random();

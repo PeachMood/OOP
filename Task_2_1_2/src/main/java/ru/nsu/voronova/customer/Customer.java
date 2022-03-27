@@ -2,7 +2,7 @@ package ru.nsu.voronova.customer;
 
 import ru.nsu.voronova.order.Order;
 import ru.nsu.voronova.producer.Producer;
-import ru.nsu.voronova.queue.SharedQueue;
+import ru.nsu.voronova.queue.MyBlockingDequeue;
 import ru.nsu.voronova.order.State;
 
 import java.util.Random;
@@ -10,9 +10,9 @@ import java.util.Random;
 public class Customer implements Producer<Order> {
     private static final long MAX_ORDERING_TIME = 100;
     private final Random random;
-    private final SharedQueue<Order> orders;
+    private final MyBlockingDequeue<Order> orders;
 
-    public Customer(SharedQueue<Order> orders) {
+    public Customer(MyBlockingDequeue<Order> orders) {
         this.random = new Random();
         this.orders = orders;
     }

@@ -18,7 +18,7 @@ public class Order {
 
     public void setState(State state) {
         this.state = state;
-        System.out.println(state);
+        System.out.println(this);
     }
 
     @Override

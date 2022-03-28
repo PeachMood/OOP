@@ -17,6 +17,9 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class simulates the operation of a pizzeria.
+ */
 public class Pizzeria implements Runnable {
     private boolean runPizzeria;
     private List<Baker> bakers;
@@ -39,6 +42,11 @@ public class Pizzeria implements Runnable {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Sets up a pizzeria based on the pizzeriaJson content.
+     *
+     * @param settings - pizzeria configuration.
+     */
     public Pizzeria(PizzeriaJSON settings) {
         this.runPizzeria = false;
         this.queue = new MyBlockingDequeue<>(settings.queueSize());
@@ -48,6 +56,9 @@ public class Pizzeria implements Runnable {
         setCouriers(settings.couriers());
     }
 
+    /**
+     * Launches a pizzeria. The pizzeria stops working either when the stop method is called, or when an error occurs.
+     */
     @Override
     public void run() {
         runPizzeria = true;
@@ -69,6 +80,9 @@ public class Pizzeria implements Runnable {
         customers.stop();
     }
 
+    /**
+     * Stops the pizzeria from working.
+     */
     public void stop() {
         System.out.println("The pizzeria is closed. Come visit us tomorrow!");
         runPizzeria = false;

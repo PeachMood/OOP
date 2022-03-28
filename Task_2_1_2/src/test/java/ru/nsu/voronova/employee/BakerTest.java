@@ -81,9 +81,10 @@ class BakerTest {
             bakers.add(new Baker(i, 1000, queue, storage));
         }
         bakers.forEach(baker -> new Thread(baker).start());
-        Thread.sleep(1000);
+        while (!storage.isEmpty()) {
+        }
+        Thread.sleep(100);
         bakers.forEach(Baker::stop);
-        assertTrue(queue.isEmpty());
         assertEquals(orders.size(), storage.getSize());
         orders.forEach(order -> assertEquals(IN_STOCK, order.getState()));
     }

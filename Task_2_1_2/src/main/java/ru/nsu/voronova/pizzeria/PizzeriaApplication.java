@@ -5,6 +5,9 @@ import ru.nsu.voronova.json.CourierJSON;
 import ru.nsu.voronova.json.JSONReader;
 import ru.nsu.voronova.json.PizzeriaJSON;
 
+/**
+ * This class reads the parameters of the pizzeria from the file, checks them for errors, configures the pizzeria and launches it.
+ */
 public class PizzeriaApplication implements Runnable {
     private final static long RUNNING_TIME = 30 * 1000;
     private PizzeriaJSON pizzeriaJSON;
@@ -43,11 +46,18 @@ public class PizzeriaApplication implements Runnable {
         pizzeria = new Pizzeria(pizzeriaJSON);
     }
 
+    /**
+     * Creates an instance of the class PizzeriaApplication.
+     */
     public PizzeriaApplication() {
         setPizzeriaJSON();
         setPizzeria();
     }
 
+    /**
+     * Launches a pizzeria.
+     * The application runs for a set time. In case of an error, it stops the application and displays a message.
+     */
     @Override
     public void run() {
         if (pizzeria == null) {

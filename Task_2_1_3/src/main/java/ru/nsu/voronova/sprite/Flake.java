@@ -27,17 +27,17 @@ public class Flake extends Sprite {
                 return;
             }
             if (next.getPositionY() < previous.getPositionY()) {
-                setImage(rotated.getRotatedSkin(90));
+                setImage(rotated.getRotatedSkin(270));
                 return;
             }
         }
         if (next.getPositionX() < previous.getPositionX()) {
             if (next.getPositionY() > previous.getPositionY()) {
-                setImage(rotated.getRotatedSkin(180));
+                setImage(rotated.getRotatedSkin(90));
                 return;
             }
             if (next.getPositionY() < previous.getPositionY()) {
-                setImage(rotated.getRotatedSkin(270));
+                setImage(rotated.getRotatedSkin(180));
             }
         }
     }

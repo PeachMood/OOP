@@ -18,7 +18,6 @@ import ru.nsu.voronova.snake.Snake;
 import static ru.nsu.voronova.direction.Direction.*;
 
 public class SnakeApplication extends Application {
-    private GraphicsContext graphicsContext;
     private Snake snake;
     private SnakeSkin snakeSkin;
 
@@ -31,14 +30,13 @@ public class SnakeApplication extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
-        graphicsContext = canvas.getGraphicsContext2D();
         snakeSkin = new SnakeSkin(40, 40);
         snakeSkin.setHeadSkin(new Image(String.valueOf(getClass().getResource("images/head.png"))));
         snakeSkin.setRotatedBodySkin(new Image(String.valueOf(getClass().getResource("images/rotated.png"))));
         snakeSkin.setStraightBodySkin(new Image(String.valueOf(getClass().getResource("images/straight.png"))));
         snakeSkin.setTailSkin(new Image(String.valueOf(getClass().getResource("images/tail.png"))));
         snake = new Snake(snakeSkin);
-        snake.initializeSnake(3, 120, 120);
+        snake.initializeSnake(5, 120, 120);
 
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
@@ -53,12 +51,13 @@ public class SnakeApplication extends Application {
             }
         });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(130), e -> run(root)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> run(root)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
 
     public void run(Group group) {
+        group.getChildren().clear();
         group.getChildren().addAll(snake.run());
     }
 

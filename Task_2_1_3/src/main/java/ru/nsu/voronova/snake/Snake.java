@@ -37,7 +37,7 @@ public class Snake {
         body.add(head);
         body.addAll(Stream.generate(() -> new Flake(snakeSkin.getRotatedBodySkin(), snakeSkin.getStraightBodySkin())).limit(snakeLength - 2).toList());
         body.add(tail);
-        for (int i = 1; i < snakeLength; ++i) {
+        for (int i = snakeLength - 1; i >= 1; --i) {
             body.get(i).setPosition(body.get(i - 1).getPositionX() - snakeSkin.getWidth(), headPositionY);
         }
         updateSnakeImage();
@@ -56,14 +56,14 @@ public class Snake {
     private void updateSnakePosition() {
         double stepX = snakeSkin.getWidth();
         double stepY = snakeSkin.getHeight();
+        for (int i = snakeLength - 1; i >= 1; --i) {
+            body.get(i).setPosition(body.get(i - 1).getPositionX(), body.get(i - 1).getPositionY());
+        }
         switch (direction) {
             case RIGHT -> head.setPosition(head.getPositionX() + stepX, head.getPositionY());
             case LEFT -> head.setPosition(head.getPositionX() - stepX, head.getPositionY());
             case UP -> head.setPosition(head.getPositionX(), head.getPositionY() - stepY);
             case DOWN -> head.setPosition(head.getPositionX(), head.getPositionY() + stepY);
-        }
-        for (int i = 1; i < snakeLength; ++i) {
-            body.get(i).setPosition(body.get(i - 1).getPositionX(), body.get(i - 1).getPositionY());
         }
     }
 
@@ -73,7 +73,7 @@ public class Snake {
             Flake flake = (Flake) body.get(i);
             flake.updateBodyImage(body.get(i + 1), body.get(i - 1));
         }
-        tail.updateTailImage(body.get(snakeLength - 3));
+        tail.updateTailImage(body.get(snakeLength - 2));
     }
 
     public List<ImageView> getSnakeImage() {

@@ -12,7 +12,17 @@ public class Tail extends Sprite {
 
     public void updateTailImage(Sprite previousFlake) {
         if (getPositionY() == previousFlake.getPositionY()) {
-            setImage(tail.getSkin());
+            if (getPositionX() < previousFlake.getPositionX()) {
+                setImage(tail.getSkin());
+                return;
+            }
+            if (getPositionX() > previousFlake.getPositionX()) {
+                setImage(tail.getRotatedSkin(180));
+                return;
+            }
+        }
+        if (getPositionY() > previousFlake.getPositionY()) {
+            setImage(tail.getRotatedSkin(270));
             return;
         }
         setImage(tail.getRotatedSkin(90));

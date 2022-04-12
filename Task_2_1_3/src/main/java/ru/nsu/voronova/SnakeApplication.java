@@ -36,7 +36,7 @@ public class SnakeApplication extends Application {
         snakeSkin.setStraightBodySkin(new Image(String.valueOf(getClass().getResource("images/straight.png"))));
         snakeSkin.setTailSkin(new Image(String.valueOf(getClass().getResource("images/tail.png"))));
         snake = new Snake(snakeSkin);
-        snake.initializeSnake(5, 120, 120);
+        snake.initializeSnake(10, 120, 120);
 
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
@@ -51,7 +51,7 @@ public class SnakeApplication extends Application {
             }
         });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> run(root)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(130), e -> run(root)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }

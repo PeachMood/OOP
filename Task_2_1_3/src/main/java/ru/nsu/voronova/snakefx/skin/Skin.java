@@ -1,10 +1,10 @@
-package ru.nsu.voronova.skin;
+package ru.nsu.voronova.snakefx.skin;
 
 import javafx.scene.image.*;
 
 public class Skin {
-    private double width;
-    private double height;
+    private final double width;
+    private final double height;
     private final Image image;
 
     public Skin(double width, double height, Image image) {
@@ -13,7 +13,15 @@ public class Skin {
         this.image = image;
     }
 
-    public ImageView getSkin() {
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public ImageView getImage() {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
@@ -21,20 +29,12 @@ public class Skin {
         return imageView;
     }
 
-    public ImageView getRotatedSkin(double degrees) {
+    public ImageView getRotatedImage(double degrees) {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
         imageView.setRotate(degrees);
         imageView.preserveRatioProperty();
         return imageView;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
     }
 }

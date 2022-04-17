@@ -1,62 +1,76 @@
 package ru.nsu.voronova.snake;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
 import ru.nsu.voronova.direction.Direction;
-import ru.nsu.voronova.skin.SnakeSkin;
-import ru.nsu.voronova.sprite.Flake;
-import ru.nsu.voronova.sprite.Head;
-import ru.nsu.voronova.sprite.Sprite;
-import ru.nsu.voronova.sprite.Tail;
+import ru.nsu.voronova.snake.sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ru.nsu.voronova.direction.Direction.*;
+import static ru.nsu.voronova.direction.Direction.RIGHT;
 
-public class Snake {
-    private final SnakeSkin snakeSkin;
-    private int snakeLength;
+public abstract class Snake {
     private Direction direction;
-    private final Head head;
-    private final Tail tail;
+    private int length;
+    private final double width;
+    private final double height;
+    private final Sprite head;
     private final List<Sprite> body;
 
-    public Snake(SnakeSkin snakeSkin) {
-        this.snakeSkin = snakeSkin;
-        this.head = new Head(snakeSkin.getHeadSkin());
-        this.tail = new Tail(snakeSkin.getTailSkin());
-        this.body = new ArrayList<>();
+    public Snake(int length, double width, double height) {
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.body = Stream.generate(() -> new Sprite(width, height)).limit(length).collect(Collectors.toCollection(ArrayList::new));
+        this.head = this.body.get(0);
     }
 
-    public void initializeSnake(int snakeLength, double headPositionX, double headPositionY) {
-        this.snakeLength = snakeLength;
-        setDirection(RIGHT);
-        head.setPosition(headPositionX, headPositionY);
-        body.add(head);
-        body.addAll(Stream.generate(() -> new Flake(snakeSkin.getRotatedBodySkin(), snakeSkin.getStraightBodySkin())).limit(snakeLength - 2).toList());
-        body.add(tail);
-        for (int i = snakeLength - 1; i >= 1; --i) {
-            body.get(i).setPosition(body.get(i - 1).getPositionX() - snakeSkin.getWidth(), headPositionY);
-        }
-        updateSnakeImage();
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public List<Sprite> getBody() {
+        return new ArrayList<>(body);
     }
 
     public void setDirection(Direction direction) {
-        if ((this.direction == UP && direction == DOWN) || (this.direction == DOWN && direction == UP)) {
-            return;
-        }
-        if ((this.direction == LEFT && direction == RIGHT) || (this.direction == RIGHT && direction == LEFT)) {
-            return;
-        }
         this.direction = direction;
     }
 
-    private void updateSnakePosition() {
-        double stepX = snakeSkin.getWidth();
-        double stepY = snakeSkin.getHeight();
-        for (int i = snakeLength - 1; i >= 1; --i) {
+    public void start(double headPositionX, double headPositionY) {
+        setDirection(RIGHT);
+        head.setPosition(headPositionX, headPositionY);
+        for (int i = 1; i < length; ++i) {
+            body.get(i).setPosition(body.get(i - 1).getPositionX() - width, headPositionY);
+        }
+    }
+
+    public void grow() {
+        Sprite flake = new Sprite(width, height);
+        flake.setPosition(-1, -1);
+        body.add(flake);
+        length++;
+    }
+
+    public boolean intersects(Object object) {
+        if (object == this) {
+            return body.stream().anyMatch(flake -> flake != head && flake.intersects(head));
+        }
+        if (object instanceof Sprite) {
+            return head.intersects((Sprite) object);
+        }
+        return false;
+    }
+
+    public void move() {
+        double stepX = width;
+        double stepY = height;
+        for (int i = length - 1; i >= 1; --i) {
             body.get(i).setPosition(body.get(i - 1).getPositionX(), body.get(i - 1).getPositionY());
         }
         switch (direction) {
@@ -67,28 +81,5 @@ public class Snake {
         }
     }
 
-    private void updateSnakeImage() {
-        head.updateHeadImage(direction);
-        for (int i = 1; i < snakeLength - 1; ++i) {
-            Flake flake = (Flake) body.get(i);
-            flake.updateBodyImage(body.get(i + 1), body.get(i - 1));
-        }
-        tail.updateTailImage(body.get(snakeLength - 2));
-    }
-
-    public List<ImageView> getSnakeImage() {
-        List<ImageView> snakeImage = new ArrayList<>();
-        body.forEach(flake -> snakeImage.add(flake.getImageView()));
-        return snakeImage;
-    }
-
-    public boolean intersects(Sprite sprite) {
-        return head.intersects(sprite);
-    }
-
-    public List<ImageView> run() {
-        updateSnakePosition();
-        updateSnakeImage();
-        return getSnakeImage();
-    }
+    public abstract Object render();
 }

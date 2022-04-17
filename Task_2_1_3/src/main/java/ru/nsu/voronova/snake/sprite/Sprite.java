@@ -1,24 +1,26 @@
-package ru.nsu.voronova.sprite;
+package ru.nsu.voronova.snake.sprite;
 
 import javafx.geometry.Rectangle2D;
-import javafx.scene.image.*;
 
 public class Sprite {
-    private ImageView imageView;
-    private double width;
-    private double height;
+    private final double width;
+    private final double height;
     private double positionX;
     private double positionY;
 
-    public Sprite() {
-        positionX = 0;
-        positionY = 0;
+    public Sprite(double width, double height) {
+        this.width = width;
+        this.height = height;
+        this.positionX = 0;
+        this.positionY = 0;
     }
 
-    public void setImage(ImageView imageView) {
-        this.imageView = imageView;
-        width = imageView.getFitWidth();
-        height = imageView.getFitHeight();
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
     }
 
     public double getPositionX() {
@@ -32,12 +34,6 @@ public class Sprite {
     public void setPosition(double x, double y) {
         positionX = x;
         positionY = y;
-    }
-
-    public ImageView getImageView() {
-        imageView.setX(positionX);
-        imageView.setY(positionY);
-        return imageView;
     }
 
     public Rectangle2D getBoundary() {

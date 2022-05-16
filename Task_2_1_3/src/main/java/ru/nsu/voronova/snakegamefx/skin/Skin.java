@@ -1,4 +1,4 @@
-package ru.nsu.voronova.snakefx.skin;
+package ru.nsu.voronova.snakegamefx.skin;
 
 import javafx.scene.image.*;
 

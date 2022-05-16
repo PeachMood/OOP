@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane alignment="BASELINE_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.voronova.SettingsController">
+    <children>
+        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <StackPane.margin>
+                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+            </StackPane.margin>
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="header1">
+                    <children>
+                        <Label fx:id="settings" alignment="CENTER" styleClass="header1" text="SETTINGS" textFill="WHITE" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Label styleClass="header2" text="Square size:" />
+                        <Slider fx:id="squareSize" max="60.0" min="20.0" showTickLabels="true" showTickMarks="true" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="text">
+                    <children>
+                        <Label styleClass="header2" text="Rows number:" />
+                        <TextField fx:id="rowsNumber" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Label styleClass="header2" text="Columns number:" />
+                        <TextField fx:id="columnsNumber" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="text">
+                    <children>
+                        <Label styleClass="header2" text="Maximum score:" />
+                        <TextField fx:id="maximumScore" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="text">
+                    <children>
+                        <Label styleClass="header2" text="Fruits number: " />
+                        <Slider fx:id="fruitsNumber" max="15.0" min="5.0" showTickLabels="true" showTickMarks="true" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Label styleClass="header2" text="Snake speed:" />
+                        <MenuButton fx:id="snakeSpeed" text="Select speed">
+                            <items>
+                                <MenuItem onAction="#chooseSlowly" text="Slowly" />
+                                <MenuItem onAction="#chooseNormal" text="Normal" />
+                                <MenuItem onAction="#chooseFast" text="Fast" />
+                            </items>
+                        </MenuButton>
+                    </children>
+                </HBox>
+                <BorderPane prefHeight="100.0" prefWidth="200.0">
+                    <left>
+                        <Button onAction="#saveConfiguration" text="Save" BorderPane.alignment="CENTER" />
+                    </left>
+                    <right>
+                        <Button onAction="#openMenu" text="Menu" BorderPane.alignment="CENTER" />
+                    </right>
+                </BorderPane>
+            </children>
+        </VBox>
+    </children>
+</StackPane>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <BorderPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" BorderPane.alignment="CENTER">
+            <left>
+                <HBox maxHeight="50.0" minHeight="50.0" prefHeight="50.0" BorderPane.alignment="CENTER">
+                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/cup/cup.png" />
+                        <HBox.margin>
+                            <Insets bottom="10.0" top="10.0"/>
+                        </HBox.margin>
+                    </ImageView>
+                    <Label fx:id="score" maxHeight="50.0" minHeight="13.0" prefHeight="50.0" text="Score"/>
+                </HBox>
+            </left>
+            <right>
+                <Button focusTraversable="false" text="Menu" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="15.0"/>
+                    </font>
+                </Button>
+            </right>
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
+            <padding>
+                <Insets left="40.0" right="40.0"/>
+            </padding>
+        </BorderPane>
+    </top>
+</BorderPane>

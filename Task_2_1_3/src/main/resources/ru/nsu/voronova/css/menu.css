@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+StackPane {
+    -fx-background-color: "#bcae76";
+}
+
+Rectangle {
+    -fx-background-color: "#f7e697";
+}
+
+.header {
+    -fx-font-family: 'Press Start 2P', cursive;
+    -fx-font-size: 35px;
+    -fx-text-fill: "#73b671";
+}
+
+.button {
+    -fx-background-color: "#bcae76";
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: "#73b671";
+    -fx-text-fill: white;
+}

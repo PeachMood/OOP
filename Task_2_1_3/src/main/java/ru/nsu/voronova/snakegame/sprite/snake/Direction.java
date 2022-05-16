@@ -1,4 +1,4 @@
-package ru.nsu.voronova.direction;
+package ru.nsu.voronova.snakegame.sprite.snake;
 
 public enum Direction {
     UP,

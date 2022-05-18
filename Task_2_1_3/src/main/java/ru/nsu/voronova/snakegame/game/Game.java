@@ -1,29 +1,28 @@
 package ru.nsu.voronova.snakegame.game;
 
-import ru.nsu.voronova.snakegame.game.state.GameState;
-import ru.nsu.voronova.snakegame.Configuration;
-import ru.nsu.voronova.snakegame.sprite.snake.Direction;
-import ru.nsu.voronova.snakegame.sprite.snake.Snake;
+import ru.nsu.voronova.application.configuration.Configuration;
 import ru.nsu.voronova.snakegame.sprite.board.Board;
 import ru.nsu.voronova.snakegame.sprite.fruit.Fruit;
+import ru.nsu.voronova.snakegame.sprite.snake.Direction;
+import ru.nsu.voronova.snakegame.sprite.snake.Snake;
 
 import java.util.List;
 
-import static ru.nsu.voronova.snakegame.game.state.GameState.*;
+import static ru.nsu.voronova.snakegame.game.GameState.*;
 
-public class SnakeGame implements Runnable {
+public class Game {
     private final Configuration configuration;
     private final Board board;
     private final Snake snake;
     private final List<Fruit> food;
     private GameState gameState;
 
-    public SnakeGame(Configuration configuration, Board board, Snake snake, List<Fruit> food) {
+    public Game(Configuration configuration, Board board, Snake snake, List<Fruit> food) {
         this.configuration = configuration;
         this.board = board;
         this.snake = snake;
         this.food = food;
-        this.gameState = PAUSE;
+        this.gameState = PLAY;
     }
 
     public int getScore() {
@@ -32,10 +31,6 @@ public class SnakeGame implements Runnable {
 
     public GameState getGameState() {
         return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
     }
 
     public void setSnakeDirection(Direction direction) {
@@ -72,8 +67,7 @@ public class SnakeGame implements Runnable {
         food.forEach(this::updateFruit);
     }
 
-    @Override
-    public void run() {
+    public void update() {
         if (gameState == PLAY) {
             eatFood();
             snake.update(configuration.squareSize(), configuration.squareSize());

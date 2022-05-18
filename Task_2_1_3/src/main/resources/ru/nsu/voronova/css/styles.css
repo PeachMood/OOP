@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.background {
+    -fx-background-color: "#bcae76";
+}
+
+.h1 {
+    -fx-font-family: 'Press Start 2P', cursive;
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+}
+
+.h2 {
+    -fx-font-family: "Fira Code Medium";
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: "#f7e697";
+    -fx-background-insets: 0;
+    -fx-text-fill: black;
+}
+
+.button:hover {
+    -fx-background-color: "#ffee51";
+    -fx-text-fill: black;
+}
+
+.menu-button {
+    -fx-background-color: "#f7e697";
+    -fx-background-insets: 0;
+}
+
+.menu-button > .arrow-button {
+    -fx-background-color: "#f7e697";
+}
+
+.menu-button > .arrow-button > .arrow {
+    -fx-background-color: black;
+}
+
+.menu-button .label {
+    -fx-text-fill: black;
+}
+
+.menu-item .label {
+    -fx-text-fill: black;
+}
+
+.menu-item:focused {
+     -fx-background-color: "#ffee51";
+}
+
+.context-menu {
+    -fx-background-color: white;
+}
+
+.slider {
+    -slider-filled-track-color: "#f7e697" ;
+    -slider-track-color: white;
+}
+
+.slider .thumb {
+    -fx-background-color: -slider-filled-track-color ;
+}
+
+.slider .track {
+    -fx-background-color: -slider-track-color ;
+}

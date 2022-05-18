@@ -6,63 +6,49 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<StackPane prefHeight="500.0" prefWidth="500.0" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/16"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.voronova.MenuController">
-    <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7e697" height="400.0" stroke="TRANSPARENT" strokeType="INSIDE"
-                   width="400.0"/>
-        <VBox maxHeight="400.0" maxWidth="400.0">
-            <children>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Label alignment="CENTER" styleClass="header" text="Snake Game"/>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="40.0"/>
-                    </VBox.margin>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-                    <children>
-                        <Button minHeight="40.0" minWidth="100.0" text="Start" onAction="#start"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-                    <children>
-                        <Button minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Settings" onAction="#settings"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-                    <children>
-                        <Button minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Exit" onAction="#exit"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                    <ImageView fitHeight="50" fitWidth="50">
-                        <Image url="@../images/snake/tail.png"/>
-                    </ImageView>
-                    <ImageView fitHeight="50" fitWidth="50">
-                        <Image url="@../images/snake/straight.png"/>
-                    </ImageView>
-                    <ImageView fitHeight="50" fitWidth="50">
-                        <Image url="@../images/snake/straight.png"/>
-                    </ImageView>
-                    <ImageView fitHeight="50" fitWidth="50">
-                        <Image url="@../images/snake/straight.png"/>
-                    </ImageView>
-                    <ImageView fitHeight="50" fitWidth="50">
-                        <Image url="@../images/snake/head.png"/>
-                    </ImageView>
-                    <ImageView fitHeight="50" fitWidth="50">
-                        <Image url="@../images/fruit/apple.png"/>
-                        <HBox.margin>
-                            <Insets left="30.0"/>
-                        </HBox.margin>
-                    </ImageView>
-                </HBox>
-            </children>
-            <StackPane.margin>
-                <Insets/>
-            </StackPane.margin>
-        </VBox>
-    </children>
+<StackPane styleClass="background" prefHeight="500.0" prefWidth="500.0" stylesheets="@../css/menu.css"
+           xmlns="http://javafx.com/javafx/16"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.voronova.application.menu.MenuController">
+    <Rectangle styleClass="menu" height="400.0" width="400.0"/>
+    <VBox maxHeight="400.0" maxWidth="400.0">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <VBox.margin>
+                <Insets top="40.0"/>
+            </VBox.margin>
+            <Label styleClass="h1" alignment="CENTER" text="Snake Game"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+            <Button minHeight="40.0" minWidth="100.0" text="Start" onAction="#startGame"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+            <Button minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Settings"
+                    onAction="#openSettings"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+            <Button minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Exit" onAction="#exit"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <ImageView fitHeight="50" fitWidth="50">
+                <Image url="@../images/snake/tail.png"/>
+            </ImageView>
+            <ImageView fitHeight="50" fitWidth="50">
+                <Image url="@../images/snake/straight.png"/>
+            </ImageView>
+            <ImageView fitHeight="50" fitWidth="50">
+                <Image url="@../images/snake/straight.png"/>
+            </ImageView>
+            <ImageView fitHeight="50" fitWidth="50">
+                <Image url="@../images/snake/straight.png"/>
+            </ImageView>
+            <ImageView fitHeight="50" fitWidth="50">
+                <Image url="@../images/snake/head.png"/>
+            </ImageView>
+            <ImageView fitHeight="50" fitWidth="50">
+                <Image url="@../images/fruit/apple.png"/>
+                <HBox.margin>
+                    <Insets left="30.0"/>
+                </HBox.margin>
+            </ImageView>
+        </HBox>
+    </VBox>
 </StackPane>

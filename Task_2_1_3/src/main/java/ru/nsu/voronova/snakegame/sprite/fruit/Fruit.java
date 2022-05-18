@@ -18,7 +18,7 @@ public abstract class Fruit implements Sprite {
 
     @Override
     public Cell getBoundary() {
-        return fruit.clone();
+        return fruit;
     }
 
     @Override

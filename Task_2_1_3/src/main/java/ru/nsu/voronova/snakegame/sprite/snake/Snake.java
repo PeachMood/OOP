@@ -1,11 +1,12 @@
 package ru.nsu.voronova.snakegame.sprite.snake;
 
-import ru.nsu.voronova.snakegame.sprite.Sprite;
 import ru.nsu.voronova.snakegame.cell.Cell;
-import ru.nsu.voronova.snakegame.sprite.board.Board;
 import ru.nsu.voronova.snakegame.sprite.fruit.Fruit;
+import ru.nsu.voronova.snakegame.sprite.Sprite;
+import ru.nsu.voronova.snakegame.sprite.board.Board;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,7 +16,7 @@ import static ru.nsu.voronova.snakegame.sprite.snake.Direction.*;
 public abstract class Snake implements Sprite {
     private final int INITIAL_LENGTH = 3;
     private Direction direction;
-    private final Cell head;
+    private Cell head;
     private final List<Cell> body;
 
     public Snake(double width, double height) {
@@ -32,34 +33,28 @@ public abstract class Snake implements Sprite {
     }
 
     public void setDirection(Direction direction) {
-        if ((this.direction == UP && direction == DOWN) || (this.direction == DOWN && direction == UP)) {
-            return;
-        }
-        if ((this.direction == LEFT && direction == RIGHT) || (this.direction == RIGHT && direction == LEFT)) {
+        if (this.direction.opposite(direction)) {
             return;
         }
         this.direction = direction;
     }
 
     public void start(double headPositionX, double headPositionY) {
-        setDirection(RIGHT);
+        direction = RIGHT;
         head.setPosition(headPositionX, headPositionY);
         for (int i = 1; i < INITIAL_LENGTH; ++i) {
-            body.get(i).setPosition(body.get(i - 1).getPositionX() - head.getWidth(), headPositionY);
+            body.get(i).setPosition(body.get(i - 1).getX() - head.getWidth(), headPositionY);
         }
     }
 
     public void grow() {
         Cell flake = new Cell(head.getWidth(), head.getHeight());
-        flake.setPosition(-1, -1);
         body.add(flake);
     }
 
     @Override
-    public Cell[] getBoundary() {
-        List<Cell> clone = new ArrayList<>();
-        body.forEach(cell -> clone.add(cell.clone()));
-        return clone.toArray(new Cell[0]);
+    public List<Cell> getBoundary() {
+        return Collections.unmodifiableList(body);
     }
 
     @Override
@@ -78,16 +73,17 @@ public abstract class Snake implements Sprite {
 
     @Override
     public void update(double x, double y) {
-        int length = getLength();
-        for (int i = length - 1; i >= 1; --i) {
-            body.get(i).setPosition(body.get(i - 1).getPositionX(), body.get(i - 1).getPositionY());
-        }
+        Cell head = new Cell(this.head.getWidth(), this.head.getHeight());
         switch (direction) {
-            case RIGHT -> head.setPosition(head.getPositionX() + x, head.getPositionY());
-            case LEFT -> head.setPosition(head.getPositionX() - x, head.getPositionY());
-            case UP -> head.setPosition(head.getPositionX(), head.getPositionY() - y);
-            case DOWN -> head.setPosition(head.getPositionX(), head.getPositionY() + y);
+            case RIGHT -> head.setPosition(this.head.getX() + x, this.head.getY());
+            case LEFT -> head.setPosition(this.head.getX() - x, this.head.getY());
+            case UP -> head.setPosition(this.head.getX(), this.head.getY() - y);
+            case DOWN -> head.setPosition(this.head.getX(), this.head.getY() + y);
         }
+        this.head = head;
+        body.add(0, head);
+        body.remove(getLength() - 1);
+
     }
 
     @Override

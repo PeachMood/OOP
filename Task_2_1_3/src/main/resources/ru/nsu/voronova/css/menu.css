@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-StackPane {
+.background {
     -fx-background-color: "#bcae76";
 }
 
-Rectangle {
-    -fx-background-color: "#f7e697";
+.menu {
+    -fx-fill: "#f7e697";
 }
 
-.header {
+.h1 {
     -fx-font-family: 'Press Start 2P', cursive;
     -fx-font-size: 35px;
     -fx-text-fill: "#73b671";

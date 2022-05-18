@@ -4,14 +4,14 @@ package ru.nsu.voronova.snakegame.cell;
 public class Cell {
     private final double width;
     private final double height;
-    private double positionX;
-    private double positionY;
+    private double x;
+    private double y;
 
     public Cell(double width, double height) {
         this.width = width;
         this.height = height;
-        this.positionX = 0;
-        this.positionY = 0;
+        this.x = 0;
+        this.y = 0;
     }
 
     public double getWidth() {
@@ -22,43 +22,21 @@ public class Cell {
         return height;
     }
 
-    public double getPositionX() {
-        return positionX;
+    public double getX() {
+        return x;
     }
 
-    public double getPositionY() {
-        return positionY;
+    public double getY() {
+        return y;
     }
 
     public void setPosition(double x, double y) {
-        positionX = x;
-        positionY = y;
+        this.x = x;
+        this.y = y;
     }
 
     public boolean intersects(Cell cell) {
-        double thisWidth = width;
-        double thisHeight = this.height;
-        double otherWidth = cell.width;
-        double otherHeight = cell.height;
-        otherWidth += cell.positionX;
-        otherHeight += cell.positionY;
-        thisWidth += positionX;
-        thisHeight += positionY;
-        return ((otherWidth < cell.positionX || otherWidth > positionX) &&
-                (otherHeight < cell.positionY || otherHeight > positionY) &&
-                (thisWidth < positionX || thisWidth > cell.positionX) &&
-                (thisHeight < positionY || thisHeight > cell.positionY));
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    public Cell clone() {
-        Cell clone = new Cell(width, height);
-        clone.setPosition(positionX, positionY);
-        return clone;
+        return cell.x + cell.width > x && cell.y + cell.height > y && cell.x < x + width && cell.y < y + height;
     }
 }
 

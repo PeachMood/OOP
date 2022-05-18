@@ -1,4 +1,4 @@
-package ru.nsu.voronova.snakegamefx.sprite.snake;
+package ru.nsu.voronova.snakegamefx.sprite;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
@@ -28,8 +28,8 @@ public class SnakeFX extends Snake {
     }
 
     private ImageView renderCell(Cell cell, ImageView imageView) {
-        imageView.setX(cell.getPositionX());
-        imageView.setY(cell.getPositionY());
+        imageView.setX(cell.getX());
+        imageView.setY(cell.getY());
         return imageView;
     }
 
@@ -44,56 +44,56 @@ public class SnakeFX extends Snake {
     }
 
     private ImageView renderTail(Cell tail, Cell previous) {
-        if (tail.getPositionY() == previous.getPositionY()) {
-            if (tail.getPositionX() < previous.getPositionX()) {
+        if (tail.getY() == previous.getY()) {
+            if (tail.getX() < previous.getX()) {
                 return renderCell(tail, tailSkin.getImage());
             }
-            if (tail.getPositionX() > previous.getPositionX()) {
+            if (tail.getX() > previous.getX()) {
                 return renderCell(tail, tailSkin.getRotatedImage(180));
             }
         }
-        if (tail.getPositionY() > previous.getPositionY()) {
+        if (tail.getY() > previous.getY()) {
             return renderCell(tail, tailSkin.getRotatedImage(270));
         }
         return renderCell(tail, tailSkin.getRotatedImage(90));
     }
 
     private ImageView renderFlake(Cell flake, Cell previous, Cell next) {
-        if (next.getPositionY() == previous.getPositionY()) {
+        if (next.getY() == previous.getY()) {
             return renderCell(flake, straightSkin.getImage());
         }
-        if (flake.getPositionX() == previous.getPositionX()) {
-            if (next.getPositionY() < previous.getPositionY()) {
-                if (next.getPositionX() < previous.getPositionX()) {
+        if (flake.getX() == previous.getX()) {
+            if (next.getY() < previous.getY()) {
+                if (next.getX() < previous.getX()) {
                     return renderCell(flake, rotatedSkin.getImage());
                 }
-                if (next.getPositionX() > previous.getPositionX()) {
+                if (next.getX() > previous.getX()) {
                     return renderCell(flake, rotatedSkin.getRotatedImage(270));
                 }
             }
-            if (next.getPositionY() > previous.getPositionY()) {
-                if (next.getPositionX() < previous.getPositionX()) {
+            if (next.getY() > previous.getY()) {
+                if (next.getX() < previous.getX()) {
                     return renderCell(flake, rotatedSkin.getRotatedImage(90));
                 }
-                if (next.getPositionX() > previous.getPositionX()) {
+                if (next.getX() > previous.getX()) {
                     return renderCell(flake, rotatedSkin.getRotatedImage(180));
                 }
             }
         }
-        if (flake.getPositionX() == next.getPositionX()) {
-            if (next.getPositionY() < previous.getPositionY()) {
-                if (next.getPositionX() < previous.getPositionX()) {
+        if (flake.getX() == next.getX()) {
+            if (next.getY() < previous.getY()) {
+                if (next.getX() < previous.getX()) {
                     return renderCell(flake, rotatedSkin.getRotatedImage(180));
                 }
-                if (next.getPositionX() > previous.getPositionX()) {
+                if (next.getX() > previous.getX()) {
                     return renderCell(flake, rotatedSkin.getRotatedImage(90));
                 }
             }
-            if (next.getPositionY() > previous.getPositionY()) {
-                if (next.getPositionX() < previous.getPositionX()) {
+            if (next.getY() > previous.getY()) {
+                if (next.getX() < previous.getX()) {
                     return renderCell(flake, rotatedSkin.getRotatedImage(270));
                 }
-                if (next.getPositionX() > previous.getPositionX()) {
+                if (next.getX() > previous.getX()) {
                     return renderCell(flake, rotatedSkin.getImage());
                 }
             }
@@ -101,21 +101,21 @@ public class SnakeFX extends Snake {
         return renderCell(flake, straightSkin.getRotatedImage(90));
     }
 
-    private List<ImageView> renderBody(int length, Cell[] body) {
-        List<ImageView> renderedBody = new ArrayList<>();
-        renderedBody.add(renderHead(body[0], getDirection()));
-        for (int i = 1; i < length - 1; ++i) {
-            renderedBody.add(renderFlake(body[i], body[i + 1], body[i - 1]));
+    private List<ImageView> renderBody(List<Cell> boundary) {
+        List<ImageView> body = new ArrayList<>();
+        body.add(renderHead(boundary.get(0), getDirection()));
+        for (int i = 1; i < boundary.size() - 1; ++i) {
+            body.add(renderFlake(boundary.get(i), boundary.get(i + 1), boundary.get(i - 1)));
         }
-        renderedBody.add(renderTail(body[length - 1], body[length - 2]));
-        return renderedBody;
+        body.add(renderTail(boundary.get(boundary.size() - 1), boundary.get(boundary.size() - 2)));
+        return body;
     }
 
     @Override
     public void render(Object object) {
-        Group playingField = ((Group) object);
+        Group frame = ((Group) object);
         Group snake = new Group();
-        snake.getChildren().addAll(renderBody(getLength(), getBoundary()));
-        playingField.getChildren().add(snake);
+        snake.getChildren().addAll(renderBody(getBoundary()));
+        frame.getChildren().add(snake);
     }
 }

@@ -6,22 +6,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.nsu.voronova.application.snakegame.SnakeGameController">
     <top>
         <BorderPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" BorderPane.alignment="CENTER">
             <left>
                 <HBox maxHeight="50.0" minHeight="50.0" prefHeight="50.0" BorderPane.alignment="CENTER">
                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../images/cup/cup.png" />
+                        <Image url="@../images/cup/cup.png"/>
                         <HBox.margin>
                             <Insets bottom="10.0" top="10.0"/>
                         </HBox.margin>
                     </ImageView>
-                    <Label fx:id="score" maxHeight="50.0" minHeight="13.0" prefHeight="50.0" text="Score"/>
+                    <Label fx:id="score" styleClass="h2" maxHeight="50.0" minHeight="13.0" prefHeight="50.0"
+                           text="Score"/>
                 </HBox>
             </left>
             <right>
-                <Button focusTraversable="false" text="Menu" BorderPane.alignment="CENTER">
+                <Button focusTraversable="false" text="Menu" BorderPane.alignment="CENTER" onAction="#openModalWindow">
                     <font>
                         <Font size="15.0"/>
                     </font>

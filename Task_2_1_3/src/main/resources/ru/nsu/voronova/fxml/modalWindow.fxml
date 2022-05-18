@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="modalWindow" styleClass="background" prefHeight="500" prefWidth="500"
+           stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.voronova.application.modalwindow.ModalWindowController">
+    <VBox alignment="CENTER" spacing="20.0">
+        <HBox alignment="CENTER">
+            <Label fx:id="header" styleClass="h1"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Button onAction="#restartGame" prefHeight="40" prefWidth="100" text="Restart"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Button onAction="#continueGame" prefHeight="40" prefWidth="100" text="Continue"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Button onAction="#openMenu" prefHeight="40" prefWidth="100" text="Menu"/>
+        </HBox>
+    </VBox>
+</StackPane>

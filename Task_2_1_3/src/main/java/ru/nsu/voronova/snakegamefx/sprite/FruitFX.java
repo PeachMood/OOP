@@ -1,4 +1,4 @@
-package ru.nsu.voronova.snakegamefx.sprite.fruit;
+package ru.nsu.voronova.snakegamefx.sprite;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
@@ -18,16 +18,16 @@ public class FruitFX extends Fruit {
     }
 
     private ImageView renderFruit(Cell fruit, ImageView imageView) {
-        imageView.setX(fruit.getPositionX());
-        imageView.setY(fruit.getPositionY());
+        imageView.setX(fruit.getX());
+        imageView.setY(fruit.getY());
         return imageView;
     }
 
     @Override
     public void render(Object object) {
-        Group playingField = ((Group) object);
+        Group frame = ((Group) object);
         Group fruit = new Group();
         fruit.getChildren().add(renderFruit(getBoundary(), skin.getImage()));
-        playingField.getChildren().add(fruit);
+        frame.getChildren().add(fruit);
     }
 }

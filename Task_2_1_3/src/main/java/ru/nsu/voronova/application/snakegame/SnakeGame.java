@@ -1,4 +1,4 @@
-package ru.nsu.voronova;
+package ru.nsu.voronova.application.snakegame;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -10,39 +10,37 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ru.nsu.voronova.snakegame.game.SnakeGame;
-import ru.nsu.voronova.snakegame.Configuration;
+import ru.nsu.voronova.application.configuration.Configuration;
 import ru.nsu.voronova.snakegame.sprite.board.Board;
 import ru.nsu.voronova.snakegame.sprite.fruit.Fruit;
 import ru.nsu.voronova.snakegame.sprite.snake.Snake;
+import ru.nsu.voronova.snakegamefx.game.GameController;
+import ru.nsu.voronova.snakegamefx.game.GameFX;
+import ru.nsu.voronova.snakegamefx.sprite.BoardFX;
 import ru.nsu.voronova.snakegamefx.skin.Skin;
-import ru.nsu.voronova.snakegamefx.sprite.board.BoardFX;
-import ru.nsu.voronova.snakegamefx.sprite.fruit.FruitFX;
-import ru.nsu.voronova.snakegamefx.sprite.snake.SnakeFX;
+import ru.nsu.voronova.snakegamefx.sprite.FruitFX;
+import ru.nsu.voronova.snakegamefx.sprite.SnakeFX;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static ru.nsu.voronova.snakegame.game.state.GameState.PLAY;
-
-public class SnakeGameFX {
+public class SnakeGame {
     private Stage stage;
     private final Configuration configuration;
     private Map<String, Image> images;
     private Board board;
     private Snake snake;
     private List<Fruit> food;
-    private SnakeGame snakeGame;
-    private Group playingField;
-    private SnakeGameController snakeGameController;
+    private GameFX snakeGame;
+    private Group frame;
+    private GameController gameController;
     private Scene scene;
     private Timeline timeline;
 
-    public SnakeGameFX(Configuration configuration) {
+    public SnakeGame(Configuration configuration) {
         this.configuration = configuration;
+        setImages();
+        setSnakeGame();
     }
 
     private void setImages() {
@@ -89,59 +87,39 @@ public class SnakeGameFX {
         setBoard();
         setSnake();
         setFood();
-        snakeGame = new SnakeGame(configuration, board, snake, food);
+        snakeGame = new GameFX(configuration, board, snake, food);
         snakeGame.start();
     }
 
-    private void setPlayingField() {
-        playingField = new Group();
-        playingField.setOnKeyPressed(snakeGameController::onKeyPressed);
-        board.render(playingField);
-        snake.render(playingField);
-        food.forEach(fruit -> fruit.render(playingField));
-    }
-
-    private void setController() {
-        this.snakeGameController = new SnakeGameController(snakeGame);
-    }
-
-    private void setScene() throws IOException {
+    private void setScene() {
+        frame = new Group();
+        snakeGame.render(frame);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/nsu/voronova/fxml/snakeGame.fxml"));
-        loader.setController(snakeGameController);
-        BorderPane root = loader.load();
-        root.setCenter(playingField);
-        scene = new Scene(root);
-        scene.setOnKeyPressed(snakeGameController::onKeyPressed);
-        scene.getStylesheets().add(String.valueOf(getClass().getResource("/ru/nsu/voronova/css/styles.css")));
+        try {
+            BorderPane root = loader.load();
+            SnakeGameController snakeGameController = loader.getController();
+            snakeGameController.initialize(stage, configuration, timeline, snakeGame);
+            root.setCenter(frame);
+            scene = new Scene(root);
+            gameController = new GameController(snakeGameController, snakeGame, timeline);
+            scene.setOnKeyPressed(gameController::handle);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     private void setTimeline() {
-        this.timeline = new Timeline(new KeyFrame(Duration.millis(configuration.snakeSpeed()), e -> {
-            snakeGameController.setScore(snakeGame.getScore());
-            snakeGame.run();
-            if (snakeGame.getGameState() == PLAY) {
-                playingField.getChildren().clear();
-                board.render(playingField);
-                food.forEach(fruit -> fruit.render(playingField));
-                snake.render(playingField);
-            }
-        }));
+        this.timeline = new Timeline(new KeyFrame(Duration.millis(configuration.snakeSpeed()), event -> gameController.run(frame)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        setImages();
-        setSnakeGame();
-        setController();
-        setPlayingField();
         setTimeline();
-        try {
-            setScene();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        setScene();
+        if (scene != null) {
+            stage.setScene(scene);
         }
-        stage.setScene(scene);
     }
 }

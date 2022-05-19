@@ -9,10 +9,20 @@ import ru.nsu.voronova.application.configuration.Configuration;
 
 import java.io.IOException;
 
+/**
+ * This class is a modal window that opens during the snake game.
+ */
 public class ModalWindow {
     private Stage modalWindowStage;
     private ModalWindowController controller;
 
+    /**
+     * Class constructor. Initializes a modal window and a controller.
+     *
+     * @param stage         - the main window with snake game.
+     * @param configuration - the current configuration of the snake game.
+     * @param timeline      - the instance of the class responsible for changing the frames of the snake game.
+     */
     public ModalWindow(Stage stage, Configuration configuration, Timeline timeline) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/nsu/voronova/fxml/modalWindow.fxml"));
         try {
@@ -26,6 +36,11 @@ public class ModalWindow {
         }
     }
 
+    /**
+     * Opens modal window with the specified header.
+     *
+     * @param header - header for the modal window.
+     */
     public void open(String header) {
         if (controller != null && modalWindowStage != null && !modalWindowStage.isShowing()) {
             controller.setHeader(header);

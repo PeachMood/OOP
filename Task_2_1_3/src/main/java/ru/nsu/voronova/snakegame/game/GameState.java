@@ -1,5 +1,8 @@
 package ru.nsu.voronova.snakegame.game;
 
+/**
+ * This class represents all possible states of the game.
+ */
 public enum GameState {
     DEFEAT("GAME OVER"),
     VICTORY("YOU WIN"),
@@ -11,6 +14,11 @@ public enum GameState {
         this.state = state;
     }
 
+    /**
+     * Returns game state as string.
+     *
+     * @return game state as string.
+     */
     @Override
     public String toString() {
         return state;

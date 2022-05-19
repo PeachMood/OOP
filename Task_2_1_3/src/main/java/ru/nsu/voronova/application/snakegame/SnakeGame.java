@@ -8,22 +8,28 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ru.nsu.voronova.application.configuration.Configuration;
 import ru.nsu.voronova.snakegame.sprite.board.Board;
 import ru.nsu.voronova.snakegame.sprite.fruit.Fruit;
 import ru.nsu.voronova.snakegame.sprite.snake.Snake;
+import ru.nsu.voronova.snakegame.sprite.wall.Wall;
 import ru.nsu.voronova.snakegamefx.game.GameController;
 import ru.nsu.voronova.snakegamefx.game.GameFX;
 import ru.nsu.voronova.snakegamefx.sprite.BoardFX;
 import ru.nsu.voronova.snakegamefx.skin.Skin;
 import ru.nsu.voronova.snakegamefx.sprite.FruitFX;
 import ru.nsu.voronova.snakegamefx.sprite.SnakeFX;
+import ru.nsu.voronova.snakegamefx.sprite.WallFX;
 
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * This class is responsible for initializing all classes required for the snake game and provides an interface for user interaction.
+ */
 public class SnakeGame {
     private Stage stage;
     private final Configuration configuration;
@@ -31,12 +37,18 @@ public class SnakeGame {
     private Board board;
     private Snake snake;
     private List<Fruit> food;
+    private List<Wall> walls;
     private GameFX snakeGame;
     private Group frame;
     private GameController gameController;
     private Scene scene;
     private Timeline timeline;
 
+    /**
+     * Class constructor.
+     *
+     * @param configuration - the current configuration of the game.
+     */
     public SnakeGame(Configuration configuration) {
         this.configuration = configuration;
         setImages();
@@ -83,11 +95,22 @@ public class SnakeGame {
         this.food = food;
     }
 
+    private void setWalls() {
+        List<Wall> walls = new ArrayList<>();
+        for (int i = 0; i < configuration.wallsNumber(); ++i) {
+            WallFX wall = new WallFX(configuration.squareSize(), configuration.squareSize());
+            wall.setColor(Color.web("#bcae76"));
+            walls.add(wall);
+        }
+        this.walls = walls;
+    }
+
     private void setSnakeGame() {
         setBoard();
         setSnake();
         setFood();
-        snakeGame = new GameFX(configuration, board, snake, food);
+        setWalls();
+        snakeGame = new GameFX(configuration, board, snake, food, walls);
         snakeGame.start();
     }
 
@@ -114,6 +137,11 @@ public class SnakeGame {
         timeline.play();
     }
 
+    /**
+     * Sets snake game in the specified window.
+     *
+     * @param stage - the specified window.
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
         setTimeline();

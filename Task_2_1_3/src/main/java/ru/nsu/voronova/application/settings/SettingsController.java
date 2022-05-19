@@ -22,6 +22,8 @@ public class SettingsController {
     @FXML
     private TextField maximumScore;
     @FXML
+    private Slider wallsNumber;
+    @FXML
     private Slider fruitsNumber;
     @FXML
     private MenuButton snakeSpeed;
@@ -34,6 +36,7 @@ public class SettingsController {
         columnsNumber.setText(String.valueOf(configuration.columnsNumber()));
         maximumScore.setText(String.valueOf(configuration.maximumScore()));
         fruitsNumber.setValue(configuration.fruitsNumber());
+        wallsNumber.setValue(configuration.wallsNumber());
     }
 
     @FXML
@@ -48,6 +51,7 @@ public class SettingsController {
         int rowsNumber = Objects.equals(this.rowsNumber.getText(), "") ? configuration.rowsNumber() : Integer.parseInt(this.rowsNumber.getText());
         int columnsNumber = Objects.equals(this.rowsNumber.getText(), "") ? configuration.columnsNumber() : Integer.parseInt(this.columnsNumber.getText());
         int maximumScore = Objects.equals(this.rowsNumber.getText(), "") ? configuration.maximumScore() : Integer.parseInt(this.maximumScore.getText());
+        int wallsNumber = (int) this.wallsNumber.getValue();
         int fruitsNumber = (int) this.fruitsNumber.getValue();
         int snakeSpeed = switch (this.snakeSpeed.getText()) {
             case "Slowly" -> 300;
@@ -55,7 +59,7 @@ public class SettingsController {
             case "Fast" -> 100;
             default -> 150;
         };
-        this.configuration = new Configuration(squareSize, rowsNumber, columnsNumber, maximumScore, fruitsNumber, snakeSpeed);
+        this.configuration = new Configuration(squareSize, rowsNumber, columnsNumber, maximumScore, wallsNumber, fruitsNumber, snakeSpeed);
         openMenu();
     }
 

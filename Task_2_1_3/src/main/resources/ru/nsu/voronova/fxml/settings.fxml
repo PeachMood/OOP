@@ -31,6 +31,11 @@
             <TextField fx:id="maximumScore"/>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="text">
+            <Label styleClass="h2" text="Walls number: "/>
+            <Slider fx:id="wallsNumber" blockIncrement="5" majorTickUnit="5" max="15" showTickLabels="true"
+                    showTickMarks="true"/>
+        </HBox>
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="text">
             <Label styleClass="h2" text="Fruits number: "/>
             <Slider fx:id="fruitsNumber" blockIncrement="5" majorTickUnit="5" max="15" min="1" showTickLabels="true"
                     showTickMarks="true"/>

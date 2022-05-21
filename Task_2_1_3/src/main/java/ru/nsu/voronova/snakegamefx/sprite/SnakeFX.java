@@ -10,12 +10,21 @@ import ru.nsu.voronova.snakegamefx.skin.Skin;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implements the abstract class Snake. Provides with an interface for rendering snake on the specified frame.
+ */
 public class SnakeFX extends Snake {
     private Skin headSkin;
     private Skin rotatedSkin;
     private Skin straightSkin;
     private Skin tailSkin;
 
+    /**
+     * Class constructor. Creates a snake with specified width and height of its cell.
+     *
+     * @param width  - fruit width.
+     * @param height - fruit height.
+     */
     public SnakeFX(double width, double height) {
         super(width, height);
     }
@@ -111,6 +120,9 @@ public class SnakeFX extends Snake {
         return body;
     }
 
+    /**
+     * @param object - object on which snake should be rendered.
+     */
     @Override
     public void render(Object object) {
         Group frame = ((Group) object);

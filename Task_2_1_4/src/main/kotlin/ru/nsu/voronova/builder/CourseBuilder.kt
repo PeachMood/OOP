@@ -1,3 +1,13 @@
+package ru.nsu.voronova.builder
+
+import ru.nsu.voronova.list.Checkpoints
+import ru.nsu.voronova.list.Groups
+import ru.nsu.voronova.list.Tasks
+import ru.nsu.voronova.model.Checkpoint
+import ru.nsu.voronova.model.Course
+import ru.nsu.voronova.model.Group
+import ru.nsu.voronova.model.Task
+
 fun course(block: CourseBuilder.() -> Unit): Course = CourseBuilder().apply(block).build()
 
 class CourseBuilder {
@@ -25,5 +35,16 @@ class CourseBuilder {
         checkpoints.addAll(Checkpoints().apply(block))
     }
 
-    fun build(): Course = Course(tasks, groups, checkpoints)
+    fun build(): Course {
+        if (tasks.size == 0) {
+            throw IllegalArgumentException("Tasks must be specified fro the course.")
+        }
+        if (groups.size == 0) {
+            throw IllegalArgumentException("Groups must be specified fro the course.")
+        }
+        if (checkpoints.size == 0) {
+            throw IllegalArgumentException("Checkpoints must be specified fro the course.")
+        }
+        return Course(tasks, groups, checkpoints)
+    }
 }

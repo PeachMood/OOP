@@ -1,5 +1,9 @@
+package ru.nsu.voronova
+
+import ru.nsu.voronova.builder.course
+
 fun main(args: Array<String>) {
-    val course: Course = course {
+    val course = course {
         tasks {
             task {
                 id = 1

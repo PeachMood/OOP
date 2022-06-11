@@ -1,4 +1,4 @@
-package ru.nsu.voronova.model
+package ru.nsu.voronova.dsl.model
 
 import java.net.URL
 
@@ -7,5 +7,5 @@ data class Student(
     val name: String,
     val surname: String,
     val repository: URL,
-    val givenTasks: List<Task>)
+    val assignedTasks: List<Int>)
 

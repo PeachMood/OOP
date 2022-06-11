@@ -1,6 +1,6 @@
-package ru.nsu.voronova.list
+package ru.nsu.voronova.dsl.list
 
-import ru.nsu.voronova.model.Checkpoint
+import ru.nsu.voronova.dsl.model.Checkpoint
 import java.text.SimpleDateFormat
 
 class Checkpoints : ArrayList<Checkpoint>() {

@@ -1,7 +1,7 @@
-package ru.nsu.voronova.list
+package ru.nsu.voronova.dsl.list
 
-import ru.nsu.voronova.builder.StudentBuilder
-import ru.nsu.voronova.model.Student
+import ru.nsu.voronova.dsl.builder.StudentBuilder
+import ru.nsu.voronova.dsl.model.Student
 
 class Students : ArrayList<Student>() {
     fun student(block: StudentBuilder.() -> Unit) {

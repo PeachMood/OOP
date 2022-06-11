@@ -14,6 +14,8 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation(kotlin("scripting-jsr223"))
+    implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.5.21")
 }
 
 tasks.test {

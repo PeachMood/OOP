@@ -1,4 +1,4 @@
-package ru.nsu.voronova.model
+package ru.nsu.voronova.dsl.model
 
 import java.util.*
 

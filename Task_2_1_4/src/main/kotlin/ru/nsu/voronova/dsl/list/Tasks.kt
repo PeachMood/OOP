@@ -1,7 +1,7 @@
-package ru.nsu.voronova.list
+package ru.nsu.voronova.dsl.list
 
-import ru.nsu.voronova.builder.TaskBuilder
-import ru.nsu.voronova.model.Task
+import ru.nsu.voronova.dsl.builder.TaskBuilder
+import ru.nsu.voronova.dsl.model.Task
 
 class Tasks : ArrayList<Task>() {
     fun task(block: TaskBuilder.() -> Unit) {

@@ -9,7 +9,7 @@ class GradleManager(project: String) {
     private val gradleConnector = GradleConnector.newConnector().forProjectDirectory(File(project))
 
     fun build(): BuildReport {
-        val projectConnection = gradleConnector.connect()
+        val projectConnection = gradleConnector.useGradleVersion("7.3").connect()
         val buildLauncher = projectConnection.newBuild().forTasks("test", "javadoc")
         return try {
             buildLauncher.run()

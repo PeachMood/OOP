@@ -18,7 +18,6 @@ class GitManager(val rootDirectoryPath: String = "./git") {
         if (directory.listFiles()?.isEmpty() == true) {
             Git.cloneRepository()
                 .setURI(repositoryURL)
-                .setBranch("master")
                 .setDirectory(directory)
                 .call()
         }

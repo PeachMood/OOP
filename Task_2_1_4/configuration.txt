@@ -1,0 +1,162 @@
+configuration {
+    tasks {
+        task {
+            id = 1
+            name = "Task_1_1_1"
+            points = 4
+            deadline = "08/03/2022"
+        }
+        task {
+            id = 2
+            name = "Task_1_1_2"
+            points = 4
+            deadline = "08/03/2022"
+        }
+        task {
+            id = 3
+            name = "Task_1_2_1"
+            points = 4
+            deadline = "08/03/2022"
+        }
+        task {
+            id = 4
+            name = "Task_1_2_2"
+            points = 4
+            deadline = "08/03/2022"
+        }
+        task {
+            id = 5
+            name = "Task_2_1_1"
+            points = 4
+            deadline = "08/03/2022"
+        }
+        task {
+            id = 6
+            name = "Task_1_3_2"
+            points = 4
+            deadline = "08/03/2022"
+        }
+    }
+    groups {
+        group {
+            name = "20213"
+            students {
+                student {
+                    nickname = "leadpogrommer"
+                    name = "Ilya"
+                    surname = "Merzlyakov"
+                    repository = "https://github.com/leadpogrommer/OOP"
+                    assignedTasks(1, 2, 3, 4, 5, 6)
+                }
+                student {
+                    nickname = "n-korotkov"
+                    name = "Nikita"
+                    surname = "Korotkov"
+                    repository = "https://github.com/ZeLebo/OOP"
+                    assignedTasks(1, 2, 3, 4, 5, 6)
+                }
+            }
+            lessons {
+                lesson {
+                    date = "01/02/2022"
+                    attendance("Korotkov", "Merzlyakov")
+                }
+                lesson {
+                    date = "08/02/2022"
+                    attendance("Merzlyakov")
+                }
+                lesson {
+                    date = "16/02/2022"
+                    attendance("Korotkov", "Merzlyakov")
+                }
+                lesson {
+                    date = "23/02/2022"
+                    attendance("Merzlyakov")
+                }
+                lesson {
+                    date = "01/03/2022"
+                    attendance("Korotkov", "Merzlyakov")
+                }
+                lesson {
+                    date = "08/03/2022"
+                    attendance("Merzlyakov")
+                }
+                lesson {
+                    date = "15/03/2022"
+                    attendance("Korotkov", "Merzlyakov")
+                }
+                lesson {
+                    date = "21/03/2022"
+                    attendance("Merzlyakov")
+                }
+            }
+        }
+        group {
+            name = "20214"
+            students {
+                student {
+                    nickname = "dTolmachev1"
+                    name = "Denis"
+                    surname = "Tolmachev"
+                    repository = "https://github.com/dTolmachev1/OOP"
+                    assignedTasks(2)
+                }
+                student {
+                    nickname = "L3XxXa"
+                    name = "Alexey"
+                    surname = "Malov"
+                    repository = "https://github.com/L3XxXa/OOP"
+                    assignedTasks(1, 2, 3, 4, 5, 6)
+                }
+                student {
+                    nickname = "Alowator"
+                    name = "Mark"
+                    surname = "Bukhner"
+                    repository = "https://github.com/Alowator/OOP"
+                    assignedTasks(1, 2, 3, 4, 5, 6)
+                }
+                student {
+                    nickname = "whitelake"
+                    name = "White"
+                    surname = "Lake"
+                    repository = "https://github.com/FacelessLake/OOP"
+                    assignedTasks(1, 2, 3, 4, 5, 6)
+                }
+            }
+            lessons {
+                lesson {
+                    date = "01/03/2022"
+                    attendance("Bukhner", "Malov", "Tolmachev")
+                }
+                lesson {
+                    date = "08/03/2022"
+                    attendance("Malov", "Tolmachev")
+                }
+                lesson {
+                    date = "23/04/2022"
+                    attendance("Bukhner", "Malov", "Tolmachev")
+                }
+                lesson {
+                    date = "01/05/2022"
+                    attendance("Tolmachev")
+                }
+                lesson {
+                    date = "08/02/2022"
+                    attendance("Bukhner", "Malov")
+                }
+                lesson {
+                    date = "15/06/2022"
+                    attendance("Bukhner", "Malov", "Tolmachev")
+                }
+                lesson {
+                    date = "21/01/2022"
+                    attendance("Bukhner", "Malov", "Tolmachev")
+                }
+            }
+        }
+    }
+    checkpoints {
+        checkpoint("Контрольна неделя 1", "06/03/2022")
+        checkpoint("Контрольная неделя 2", "24/04/2022")
+    }
+}
